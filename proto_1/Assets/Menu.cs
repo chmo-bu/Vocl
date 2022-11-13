@@ -12,7 +12,7 @@ public class mainScene : MonoBehaviour
 
     public void HideMenu()
     {
-        loadingObject.SetActive(false);
+        menuObject.SetActive(false);
     }
 
     void Start()
