@@ -9,6 +9,7 @@ public class Main : MonoBehaviour
 {
     public GameObject loadingObject;
     public GameObject menuObject;
+    public GameObject inGameObject;
    // private Timer timer1; 
     private float timeLeft = 7.0f;
 
@@ -17,6 +18,7 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inGameObject.SetActive(false);
         //Debug.Log("Hello world!");
         HideMenu();
         //scenesToLoad.Add(SceneManager.LoadSceneAsync)
@@ -75,5 +77,15 @@ public class Main : MonoBehaviour
         {
             switchToMenu();
         }
+    }
+
+    private void StartButtonTask() {
+        Debug.Log("Start Button Pressed!");
+    }
+
+    public void onStartClick() {
+        menuObject.SetActive(false);
+        inGameObject.SetActive(true);
+        StartButtonTask();
     }
 }
