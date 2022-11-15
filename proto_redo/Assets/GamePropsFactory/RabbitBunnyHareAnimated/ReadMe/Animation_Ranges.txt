@@ -1,0 +1,63 @@
+
+Note:
+
+1. Remember to playback the animations at 30 fps.
+
+2. Textures at different resolutions are included in the package and named accordingly.
+
+3. The lighting is baked in the texture.
+
+4. The entire model is rigged including the face(Mouth, Eyes, Ears).
+
+5. Maya Source files containing the rig are included in the package in case modifications or further animating is required.
+
+Different animations have the following ranges:
+
+Total Range: 20-1088
+
+1. Jump 	          ------- 20-60
+
+2. Leap right             ------- 61-83
+
+3. Leap left		  ------- 84-105
+
+4. Skidding		  ------- 106-153
+
+5. Roll			  ------- 155-182
+
+6. Crash & death	  ------- 185-224
+
+7. Whirl jump		  ------- 225-285
+
+8. Waving in air	  ------- 288-344
+
+9. Backwards run	  ------- 347-376
+
+10. Dizzy		  ------- 378-433
+
+11. Double Roll		  ------- 434-463
+
+12. Looking behind	  ------- 465-504
+
+13. Skidding 2		  ------- 506-554
+
+14. Whirl		  ------- 556-585
+
+15. Power up		  ------- 588-607
+
+16. Run		  	  ------- 610-629
+
+17. Idle		  ------- 632-776
+
+18. Gum bubble		  ------- 777-859
+
+19. Fall jump		  ------- 866-880
+
+20. Gliding		  ------- 883-959
+
+21. Idle & waving	  ------- 961-1088
+
+
+Please checkout our other exciting and moderately priced models on the store.
+
+Thanks for considering our product!
