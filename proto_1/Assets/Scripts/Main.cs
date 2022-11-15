@@ -7,37 +7,24 @@ using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
+    // game objects
     public GameObject loadingObject;
     public GameObject menuObject;
     public GameObject inGameObject;
-   // private Timer timer1; 
-    private float timeLeft = 7.0f;
 
-    //List<AsyncOperation> scenesToLoad = new List<AsyncOperation>();
+    // start button flag
+    private bool start = false;
+
+    // loading time
+    private float timeLeft = 7.0f;
     
     // Start is called before the first frame update
     void Start()
     {
-        inGameObject.SetActive(false);
-        //Debug.Log("Hello world!");
+        StopGame();
         HideMenu();
-        //scenesToLoad.Add(SceneManager.LoadSceneAsync)
         ShowLoadingScreen();
-      //  InitTimer();
     }
-
-    // public void InitTimer()
-    // {
-    //     timer1 = new Timer();
-    //     timer1.Tick += new EventHandler(timer1_Tick);
-    //     timer1.Interval = 3000; // in miliseconds
-    //     timer1.Start();
-    // }
-
-    // private void timer1_Tick(object sender, EventArgs e)
-    // {
-    //     switchToMenu();
-    // }
 
     public void HideMenu()
     {
@@ -55,21 +42,7 @@ public class Main : MonoBehaviour
         menuObject.SetActive(true);
     }
     
-    // IEnumerator LoadingScreen()
-    // {
-    //     float totalProgress = 0;
-    //     for (int i = 0; i < scenesToLoad.Count; i++)
-    //     {
-    //         while (!scenesToLoad[i].isDone)
-    //         {
-    //             totalProgress += scenesToLoad[i].progress;
-    //             yield return null;
-    //         }
-    //     }
-    // }
-    /*
     // Update is called once per frame
-    */
     void Update()
     {
         timeLeft -= Time.deltaTime;
@@ -77,13 +50,31 @@ public class Main : MonoBehaviour
         {
             switchToMenu();
         }
+
+        if (start == true) {
+            // do start button task
+            StartButtonTask();
+        }
     }
 
     private void StartButtonTask() {
-        Debug.Log("Start Button Pressed!");
+        // reveal game object and hide menu object
+        StartGame();
+        HideMenu();
+    }
+
+    private void StartGame() {
+        // activate inGameObject
+        inGameObject.SetActive(true);
+    }
+
+    private void StopGame() {
+        // deactivate inGameObject
+        inGameObject.SetActive(false);
     }
 
     public void onStartClick() {
-        StartButtonTask();
+        // change start flag
+        start = true;
     }
 }
