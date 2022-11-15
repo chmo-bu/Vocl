@@ -16,9 +16,6 @@ public class Main : MonoBehaviour
     // start button flag
     private bool start = false;
 
-    // object click flag
-    private bool objectClicked = false;
-
     // loading time
     private float timeLeft = 7.0f;
 
@@ -74,24 +71,17 @@ public class Main : MonoBehaviour
             // make clickable active
             ClickableObject.SetActive(true);
 
-            // // check touch inputs
-            // if (Input.touchCount > 0) {
-            //     touch = Input.GetTouch(0);
+            // check touch inputs
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+                touch = Input.GetTouch(0);
 
-            //     // change object position on click
-            //     if (checkCircleIntersect(touch.position.x, touch.position.y, 
-            //         ClickableObject.transform.position.x, ClickableObject.transform.position.y, 
-            //         touch.radius, 100)) {
-            //         Debug.Log("intersect");
-            //         // ChangePosition();
-            //     }
-            // }
-
-            // TODO: change position on clicking on object
-
-            if (objectClicked) {
-                Debug.Log("object touched!");
-                // objectClicked = false;
+                // change object position on click
+                if (checkCircleIntersect(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y, 
+                    ClickableObject.transform.position.x, ClickableObject.transform.position.y, 
+                    touch.radius, 250)) {
+                    Debug.Log("intersect");
+                    ChangePosition();
+                }
             }
         }
     }
@@ -117,20 +107,16 @@ public class Main : MonoBehaviour
         start = true;
     }
 
-    public void onObjectClick() {
-        // change object click flag
-        objectClicked = true;
-        Debug.Log("clicked");
-    }
-
     private void SetMinMax() {
         Vector2 Bounds = Camera.main.ScreenToWorldPoint(
             new Vector2(Screen.width, Screen.height));
+
+        // Debug.Log(Bounds);
         
-        minX = -Bounds.x;
-        maxX = Bounds.x;
-        minY = -Bounds.y;
-        maxX = Bounds.y;
+        minX = 0;
+        maxX = Screen.width;
+        minY = 0;
+        maxY = Screen.height;
     }
 
     private void ChangePosition() {
