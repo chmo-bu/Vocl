@@ -31,11 +31,12 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ClickableObject.SetActive(false);
+        // ClickableObject.SetActive(false);
         SetMinMax();
         StopGame();
         HideMenu();
         ShowLoadingScreen();
+        ClickableObject = inGameObject.transform.Find("ClickableObject").gameObject;
     }
 
     public void HideMenu()
@@ -69,7 +70,7 @@ public class Main : MonoBehaviour
 
 
             // make clickable active
-            ClickableObject.SetActive(true);
+            // ClickableObject.SetActive(true);
 
             // check touch inputs
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
@@ -124,6 +125,7 @@ public class Main : MonoBehaviour
         ClickableObject.transform.position = pos;
     }
 
+    // https://www.geeksforgeeks.org/check-two-given-circles-touch-intersect/
     public bool checkCircleIntersect(float x1, float y1, float x2, float y2, float r1, float r2) {
         double d = Mathf.Sqrt((x1 - x2) * (x1 - x2)
             + (y1 - y2) * (y1 - y2));
