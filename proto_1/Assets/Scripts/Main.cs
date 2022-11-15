@@ -84,8 +84,6 @@ public class Main : MonoBehaviour
     }
 
     public void onStartClick() {
-        menuObject.SetActive(false);
-        inGameObject.SetActive(true);
         StartButtonTask();
     }
 }
