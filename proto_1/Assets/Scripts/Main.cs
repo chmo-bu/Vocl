@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 //using System.Windows.Forms.Timer;
 
 public class Main : MonoBehaviour
 {
-    // game objects
+    // game objects for scenes
     public GameObject loadingObject;
     public GameObject menuObject;
     public GameObject inGameObject;
+
+    // child objects
     public GameObject ClickableObject;
+    public GameObject scoreObject;
+
+    // tmpro text
+    private TMP_Text scoreText;
 
     // start button flag
     private bool start = false;
@@ -27,16 +34,22 @@ public class Main : MonoBehaviour
 
     // random object spawn position
     private Vector2 pos;
+    
+    // number of times object clicked
+    private volatile uint score = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        // ClickableObject.SetActive(false);
         SetMinMax();
         StopGame();
         HideMenu();
         ShowLoadingScreen();
+
         ClickableObject = inGameObject.transform.Find("ClickableObject").gameObject;
+        scoreObject = inGameObject.transform.Find("Score").gameObject;
+
+        scoreText = scoreObject.transform.Find("ScoreText").gameObject.GetComponent<TMP_Text>();
     }
 
     public void HideMenu()
@@ -80,8 +93,10 @@ public class Main : MonoBehaviour
                 if (checkCircleIntersect(Camera.main.ScreenToWorldPoint(touch.position).x, Camera.main.ScreenToWorldPoint(touch.position).y, 
                     ClickableObject.transform.position.x, ClickableObject.transform.position.y, 
                     touch.radius, 250)) {
-                    Debug.Log("intersect");
                     ChangePosition();
+                    score++;
+                    scoreText.text = "Score: " + score;
+                    Debug.Log("score: " + score);
                 }
             }
         }
