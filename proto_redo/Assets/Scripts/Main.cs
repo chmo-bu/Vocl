@@ -9,6 +9,7 @@ public class Main : MonoBehaviour
 {
     public GameObject loadingObject;
     public GameObject menuObject;
+    public GameObject gameLoad;
     //public GameObject game;
    // public GameObject button;
     //public GameObject play_button
@@ -24,6 +25,7 @@ public class Main : MonoBehaviour
     {
         //Debug.Log("Hello world!");
         HideMenu();
+        gameLoad.SetActive(false);
        // HideGame();
         //scenesToLoad.Add(SceneManager.LoadSceneAsync)
         ShowLoadingScreen();
