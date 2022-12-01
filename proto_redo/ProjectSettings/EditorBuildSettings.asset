@@ -4,5 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LoadScene.unity
+    guid: fafa0a52844ff5c4b8dc11e0d8b41e78
+  - enabled: 1
+    path: Assets/Scenes/fruit_game.unity
+    guid: 655dc773514325d41aec8f76bda416a2
+  m_configObjects:
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 3bd9a3d67e2fc884085ffbdb8eccc301, type: 2}
