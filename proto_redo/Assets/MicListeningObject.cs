@@ -30,7 +30,7 @@ public class MicListeningObject : MonoBehaviour
         if (currentLoudness > loudness)
         {
             currentLoudness = streamingMic.m_level;
-            Debug.Log("Jump currentLoudness =" + currentLoudness);
+            // Debug.Log("Jump currentLoudness =" + currentLoudness);
             rigBody2D.AddForce(new Vector2(0, jumpForce));
             jump = false;
         }
