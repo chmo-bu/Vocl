@@ -33,6 +33,8 @@ public class AudioTest : MonoBehaviour
         if(!bInitializePrevLevel){streamingMic.InitializePrevLevel(); bInitializePrevLevel=true; return;}
         timer += Time.deltaTime; if(timer < waitTime) {streamingMic.FillPrevLevel(); return; }//wait for 1.5 seconds before responding to sound. This will allow the threashold to settle. 
 
+        // Debug.Log(streamingMic.m_5buff);
+
         if (streamingMic.m_5buff > streamingMic.Threshold(1.5f)) //&&     //calculate new value for m_threshold
             //System.DateTime.Now > streamingMic.playCollisionSoundStops)//do not trigger threshold crossing for the colision sound
         {//above the treshold => force up. 
