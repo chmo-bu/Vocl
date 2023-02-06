@@ -5,6 +5,37 @@ import matplotlib.animation as animation
 import pyaudio
 import time
 
+class MovingAverage(object):
+    def __init__(self, length=160000):
+        self.buffer = np.zeros((length,))
+        self.idx = 0
+        self.size = 0
+        self.length = length
+
+    def __len__(self):
+        return self.length
+
+    def push(self, values):
+        if (isinstance(values, np.ndarray)):
+            l = len(values)
+            if (self.size < self.length):
+                self.size += l
+            temp = (self.idx + l)
+            if (temp > self.length):
+                self.buffer[self.idx:self.length] = values[:self.length-self.idx]
+                temp = len(values) - (self.length - self.idx)
+                values = values[self.length-self.idx:len(values)]
+                self.idx = 0
+            self.buffer[self.idx:temp] = values
+            self.idx = temp
+
+    def mean(self):
+        return self.buffer[:self.size].mean()
+
+    def std(self):
+        return self.buffer[:self.size].std()
+
+
 class HighPass:
     MINTHRESHOLD = 0.002
     NUM_SECONDS = 5 #to calculate the threshold we need to average m_level over several seconds (the duration of vocalization).
@@ -146,14 +177,48 @@ class Scope:
         self.ax.set_ylim(-.1, 1.1)
         self.ax.set_xlim(0, self.maxt)
 
-        self.filter = HighPass(frequency=5000)
+        self.filter = HighPass(frequency=2800)
         self.filter.filter()
         self.waitTime = 1.5
         self.prev = time.time()
         self.bInitializePrevLevel = False
+        self.data = []
+        self.avg = MovingAverage(16000*5)
 
     def update(self, data):
         SUM = 0
+        N = 1024
+        # T = 1.0/ 16000.0
+        # yf = np.fft.fft(data)
+        # yf = 2.0/N * np.abs(yf[0:N//2])
+        # if (yf.max() > 0.2):
+        #     print("here!")
+
+        moving_averages = []
+
+        window_size = 3
+        i = 0
+  
+        # Loop through the array t o
+        #consider every window of size 3
+        while i < len(data) - window_size + 1:
+        
+            # Calculate the average of current window
+            window_average = round(np.sum(data[
+            i:i+window_size]) / window_size, 2)
+            
+            # Store the average of current
+            # window in moving average list
+            moving_averages.append(window_average)
+            
+            # Shift window to right by one position
+            i += 1
+                # print(yf.mean(), yf.std(), yf.max(), yf.min())
+
+        data = moving_averages
+
+        self.avg.push(data)
+
         for y in data:
             lastt = self.tdata[-1]
             if lastt >= self.tdata[0] + self.maxt:  # reset the arrays
@@ -166,40 +231,46 @@ class Scope:
             # from just repeatedly adding `self.dt` to the previous value.
             t = self.tdata[0] + len(self.tdata) * self.dt
 
-            self.filter.update(y)
-            res = self.filter.getValue()
+            # self.filter.update(y)
+            # res = self.filter.getValue()
 
-            SUM += (res * res)
+            # SUM += (res * res)
 
             self.tdata.append(t)
-            self.ydata.append(res)
+            # self.ydata.append(res)
+            # self.data.append(y)
+            self.ydata.append(y)
             self.line.set_data(self.tdata, self.ydata)
             
-        self.filter.rmsLevel = np.sqrt(SUM / len(data))
+        # m = self.avg.mean()
+        # s = self.avg.std()
 
-        if(self.filter.rmsLevel>self.filter.max_mic_level_detected):
-            self.filter.max_mic_level_detected=self.filter.rmsLevel #keep an eye on the maximum self.rmsLevel ever reach, out threshold must be way lower 
-        if(self.filter.max_mic_level_detected<HighPass.MINTHRESHOLD*10):
-            self.filter.max_mic_level_detected=HighPass.MINTHRESHOLD*10 #we cannot set max_mic_level_detected too low and at the start, when there were no vocalizations it could be quite low
+        # print(m + 4*s)
+        # self.filter.rmsLevel = np.sqrt(SUM / len(data))
 
-        if(not self.bInitializePrevLevel):
-            self.filter.InitializePrevLevel()
-            self.bInitializePrevLevel=True
-            return self.line, 
+        # if(self.filter.rmsLevel>self.filter.max_mic_level_detected):
+        #     self.filter.max_mic_level_detected=self.filter.rmsLevel #keep an eye on the maximum self.rmsLevel ever reach, out threshold must be way lower 
+        # if(self.filter.max_mic_level_detected<HighPass.MINTHRESHOLD*10):
+        #     self.filter.max_mic_level_detected=HighPass.MINTHRESHOLD*10 #we cannot set max_mic_level_detected too low and at the start, when there were no vocalizations it could be quite low
 
-        timer = time.time()
+        # if(not self.bInitializePrevLevel):
+        #     self.filter.InitializePrevLevel()
+        #     self.bInitializePrevLevel=True
+        #     return self.line, 
 
-        if(abs(timer - self.prev) < self.waitTime):
-            self.filter.FillPrevLevel()
-            return self.line,
+        # timer = time.time()
 
-        # print(self.filter.m_5buff, self.filter.Threshold(1.5))
+        # if(abs(timer - self.prev) < self.waitTime):
+        #     self.filter.FillPrevLevel()
+        #     return self.line,
 
-        if (self.filter.m_5buff > self.filter.Threshold(1.5)):
-            print("[{:.2f}]: detected!".format(timer))
-            self.line.set_color("r")
-        else:
-            self.line.set_color('b')
+        # # print(self.filter.m_5buff, self.filter.Threshold(1.5))
+
+        # if (self.filter.m_5buff > self.filter.Threshold(1.5)):
+        #     # print("[{:.2f}]: detected!".format(timer))
+        #     self.line.set_color("r")
+        # else:
+        #     self.line.set_color('b')
 
         return self.line,
 
