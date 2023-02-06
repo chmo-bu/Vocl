@@ -47,7 +47,7 @@ public class Game2 : MonoBehaviour
             timer = timer - .5f;
         }
 
-        /* Moves rabbit to next destination if running, if not idle */
+        /* Moves rabbit to next destination if running, if not then idle */
 
         if (moving == true && timer == 0)
         {
