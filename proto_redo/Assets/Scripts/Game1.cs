@@ -22,6 +22,7 @@ public class Game1 : MonoBehaviour
     public GameObject correct_prompt;
     public GameObject incorrect_prompt;
     public GameObject destination1;
+    //public GameObject submitButton;
     private bool moving;
     private float timer;
     private bool complete;
@@ -30,6 +31,7 @@ public class Game1 : MonoBehaviour
         correct_prompt.SetActive(false);
         incorrect_prompt.SetActive(false);
         prompt.SetActive(true);
+        //submitButton.SetActive(false);
         moving = false;
         timer = 17f;
         complete = false;
