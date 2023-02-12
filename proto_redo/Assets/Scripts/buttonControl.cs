@@ -11,6 +11,8 @@ public class buttonControl : MonoBehaviour
     public GameObject destination2;
     public Vector3 rabbitLocation;
 
+    public RuntimeAnimatorController CelebrateRun;
+
     public Vector3 target1;
     public Vector3 target2;
     public Vector3 start;
@@ -28,6 +30,8 @@ public class buttonControl : MonoBehaviour
     void Update()
     {
         rabbitLocation = rabbit.transform.position;
+        Animator currentAnimator = rabbit.GetComponent<Animator>();
+        
 
         float distFromStart = Vector3.Distance(rabbitLocation, start);
         float distFromTarget1 = Vector3.Distance(rabbitLocation, target1);
@@ -35,7 +39,7 @@ public class buttonControl : MonoBehaviour
 
         //Debug.Log(distFromTarget1);
 
-        if (distFromStart <= 3 || distFromTarget2 <= 3)
+        if (distFromStart <= 3 || distFromTarget2 <= 3 || currentAnimator.runtimeAnimatorController == CelebrateRun)
         {
             submitButton.SetActive(false);
         }

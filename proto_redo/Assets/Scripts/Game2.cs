@@ -6,7 +6,9 @@ public class Game2 : MonoBehaviour
 {
     // game objects
     public GameObject rabbit;
-    public GameObject fruit1, fruit2, fruit3;
+    public GameObject biggestFruit; 
+    public GameObject mediumFruit;
+    public GameObject smallestFruit;
 
     // animators 
     public RuntimeAnimatorController CelebrateRun;
@@ -35,10 +37,6 @@ public class Game2 : MonoBehaviour
         complete = false;
     }
 
-    public void move ()
-    {
-        moving = true;
-    }
 
     // Update is called once per frame
     void Update()
@@ -70,9 +68,40 @@ public class Game2 : MonoBehaviour
             {
                 moving = false;
                 timer = 17f; // reset timer
-                rabbit.transform.Rotate(0,90,0);
+                rabbit.transform.Rotate(0,310,0);
                 currentAnimator.runtimeAnimatorController = idle;
             }
+        }
+
+    }
+
+    public void checkOrder()
+    {
+        Animator currentAnimator = rabbit.GetComponent<Animator>();
+
+        float bigLocation = biggestFruit.transform.position.x;
+        float mediumLocation = mediumFruit.transform.position.x;
+        float smallLocation = smallestFruit.transform.position.x;
+
+        // check if small < medium < biggest
+        bool firstCheck = smallLocation < mediumLocation;
+        bool secondCheck = smallLocation < bigLocation;
+        bool thirdCheck = mediumLocation < bigLocation;
+
+        if (firstCheck && secondCheck && thirdCheck)
+        {
+            prompt.SetActive(false);
+            incorrect_prompt.SetActive(false);
+            correct_prompt.SetActive(true);
+            currentAnimator.runtimeAnimatorController = CelebrateRun;
+            complete = true;
+            rabbit.transform.Rotate(0,45,0);
+            moving = true;
+        }
+        else
+        {
+            prompt.SetActive(false);
+            incorrect_prompt.SetActive(true);
         }
     }
 }
