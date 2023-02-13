@@ -109,8 +109,8 @@ public class Game1 : MonoBehaviour
                         //StartCoroutine(wait(currentAnimator));
                         //wait();
                         complete = true;
-                         rabbit.transform.Rotate(0,270,0);
-                       move();
+                         rabbit.transform.Rotate(0,260,0);
+                      moving = true;
                         /*
                         bool arrived = false;
                         while (arrived == false)
