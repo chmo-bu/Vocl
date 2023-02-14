@@ -5,6 +5,7 @@ using UnityEngine;
 public class buttonControl : MonoBehaviour
 {
     public GameObject submitButton;
+    public GameObject homeButton;
     public GameObject rabbit;
     public GameObject startLocation;
     public GameObject destination1;
@@ -25,6 +26,7 @@ public class buttonControl : MonoBehaviour
         target2 = destination2.transform.position;
         start = startLocation.transform.position;
         submitButton.SetActive(false);
+        homeButton.SetActive(true);
     }
 
     void Update()

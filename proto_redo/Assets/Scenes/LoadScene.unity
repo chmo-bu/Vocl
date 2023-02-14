@@ -265,7 +265,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.35590956, g: 0.5849056, b: 0.56468904, a: 0}
+  m_BackGroundColor: {r: 0.032840855, g: 0.6622348, b: 0.7735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -774,7 +774,12 @@ PrefabInstance:
     - target: {fileID: 2429025852486501575, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1000
+      value: -882
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429025852520309549, guid: cbd104cfb9d21416d9efb4193c6054a0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 519
       objectReference: {fileID: 0}
     - target: {fileID: 2429025852656271447, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
@@ -799,7 +804,7 @@ PrefabInstance:
     - target: {fileID: 2429025852656271447, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1009
+      value: -876
       objectReference: {fileID: 0}
     - target: {fileID: 2429025853544463334, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
@@ -939,7 +944,7 @@ PrefabInstance:
     - target: {fileID: 7304121853679489537, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1861
+      value: -1740
       objectReference: {fileID: 0}
     - target: {fileID: 7304121853679489537, guid: cbd104cfb9d21416d9efb4193c6054a0,
         type: 3}
