@@ -12,5 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/fruit_game.unity
     guid: 655dc773514325d41aec8f76bda416a2
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 36d70e81b493e43888f5f8002f144a2e,
+      type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: 3bd9a3d67e2fc884085ffbdb8eccc301, type: 2}
