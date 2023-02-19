@@ -75,8 +75,8 @@ public class AudioTest : MonoBehaviour
                 float [] tail = streamingMic._samples.slice(start, stop);
 
                 // wait for at least 1.5 seconds of audio data
-                while ((streamingMic._samples._head - stop < half) && 
-                    (streamingMic._samples._length - stop + streamingMic._samples._head < half));
+                while (((streamingMic._samples._head - stop) < half) && 
+                    ((streamingMic._samples._length - stop + streamingMic._samples._head) < half));
 
                 // get 1.5 latter seconds
                 float[] head = streamingMic._samples.slice(stop, stop + half);

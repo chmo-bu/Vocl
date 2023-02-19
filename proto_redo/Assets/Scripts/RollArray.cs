@@ -49,7 +49,7 @@ namespace RollArray {
                 if (_start > _stop) {  // for roll-over copy first-half to destination array
                     int diff  = _length - _start;
                     Array.Copy(_data, _start, _slice, _idx, diff);
-                    _idx = _size - diff;
+                    _idx = diff;
                     _start = 0;
                     _size -= _idx;
                 }
