@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
+using System.Text;
+using RollArray;
 
 public class StreamingMic : MonoBehaviour
 {//AV 0401 2022: filtering with AudioSource //https://youtu.be/GHc9RF258VA?t=223
@@ -33,6 +36,14 @@ public class StreamingMic : MonoBehaviour
     private float c, a1, a2, a3, b1, b2;
     private float[] inputHistory = new float[2];/// Array of input values, latest are in front
     private float[] outputHistory = new float[3];/// Array of output values, latest are in front
+
+    // public Queue<float> _samples = new Queue<float>(48000);
+    // private float[] _samples = new float[48000];
+    // private int _length = 0;
+    // private int _head = 0;
+    // private int _capacity = 48000;
+
+    public RollArray<float> _samples = new RollArray<float>(48000);
 
 
     public void FilterHighpassButterworth()
@@ -131,7 +142,14 @@ public class StreamingMic : MonoBehaviour
                 //Highpass filter the samples array in order to filter out low frequency noise, adult voice, and motor sound in the driving game//https://stackoverflow.com/questions/8079526/lowpass-and-high-pass-filter-in-c-sharp
                 float[] filtered = new float[nsamplesarray];//latest are in front
                 outputHistory[0]=inputHistory[0]=samples[0]; outputHistory[1]=inputHistory[1]=samples[1];
-                for (int i=2; i<nsamplesarray; i++){ filtered[i]=FilterButterworth(samples[i]);}
+                
+                // StringBuilder sb = new StringBuilder();
+
+                for (int i=2; i<nsamplesarray; i++) { 
+                    filtered[i]=FilterButterworth(samples[i]);
+                    _samples.push(samples[i]);
+                }
+                // Debug.Log(_samples._head);
 
                 //calculate root mean square - it is much more reliable than the maximum
                 float sum=0;
@@ -220,6 +238,32 @@ public class StreamingMic : MonoBehaviour
 
         return m_threshold;
     }   
+
+    public int argmax(float[] arr) {
+        float ma = arr[0];
+        int amax = 0;
+        for (int i=1; i<arr.Length; i++) {
+            float temp = arr[i];
+            if (temp > ma) {
+                amax = i;
+                ma = temp;
+            }
+        }
+        return amax;
+    }
+
+    public int argmax(float[] arr, int start, int end) {
+        float ma = arr[start];
+        int amax = start;
+        for (int i=start+1; i<end; i++) {
+            float temp = arr[i];
+            if (temp > ma) {
+                amax = i;
+                ma = temp;
+            }
+        }
+        return amax;
+    }
         
 }
 

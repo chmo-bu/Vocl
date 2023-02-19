@@ -183,7 +183,7 @@ class Scope:
         self.prev = time.time()
         self.bInitializePrevLevel = False
         self.data = []
-        self.avg = MovingAverage(16000*5)
+        self.window = MovingAverage(16000*3)
 
     def update(self, data):
         SUM = 0
@@ -194,30 +194,30 @@ class Scope:
         # if (yf.max() > 0.2):
         #     print("here!")
 
-        moving_averages = []
+        # moving_averages = []
 
-        window_size = 3
-        i = 0
+        # window_size = 3
+        # i = 0
   
-        # Loop through the array t o
-        #consider every window of size 3
-        while i < len(data) - window_size + 1:
+        # # Loop through the array t o
+        # #consider every window of size 3
+        # while i < len(data) - window_size + 1:
         
-            # Calculate the average of current window
-            window_average = round(np.sum(data[
-            i:i+window_size]) / window_size, 2)
+        #     # Calculate the average of current window
+        #     window_average = round(np.sum(data[
+        #     i:i+window_size]) / window_size, 2)
             
-            # Store the average of current
-            # window in moving average list
-            moving_averages.append(window_average)
+        #     # Store the average of current
+        #     # window in moving average list
+        #     moving_averages.append(window_average)
             
-            # Shift window to right by one position
-            i += 1
-                # print(yf.mean(), yf.std(), yf.max(), yf.min())
+        #     # Shift window to right by one position
+        #     i += 1
+        #         # print(yf.mean(), yf.std(), yf.max(), yf.min())
 
-        data = moving_averages
+        # data = moving_averages
 
-        self.avg.push(data)
+        # self.avg.push(data)
 
         for y in data:
             lastt = self.tdata[-1]
@@ -231,46 +231,51 @@ class Scope:
             # from just repeatedly adding `self.dt` to the previous value.
             t = self.tdata[0] + len(self.tdata) * self.dt
 
-            # self.filter.update(y)
-            # res = self.filter.getValue()
+            self.filter.update(y)
+            res = self.filter.getValue()
 
-            # SUM += (res * res)
+            SUM += (res * res)
 
             self.tdata.append(t)
             # self.ydata.append(res)
             # self.data.append(y)
             self.ydata.append(y)
             self.line.set_data(self.tdata, self.ydata)
-            
+        
+        # np.save("data.npy", self.data)
+        
         # m = self.avg.mean()
         # s = self.avg.std()
 
         # print(m + 4*s)
-        # self.filter.rmsLevel = np.sqrt(SUM / len(data))
+        self.filter.rmsLevel = np.sqrt(SUM / len(data))
 
-        # if(self.filter.rmsLevel>self.filter.max_mic_level_detected):
-        #     self.filter.max_mic_level_detected=self.filter.rmsLevel #keep an eye on the maximum self.rmsLevel ever reach, out threshold must be way lower 
-        # if(self.filter.max_mic_level_detected<HighPass.MINTHRESHOLD*10):
-        #     self.filter.max_mic_level_detected=HighPass.MINTHRESHOLD*10 #we cannot set max_mic_level_detected too low and at the start, when there were no vocalizations it could be quite low
+        if(self.filter.rmsLevel>self.filter.max_mic_level_detected):
+            self.filter.max_mic_level_detected=self.filter.rmsLevel #keep an eye on the maximum self.rmsLevel ever reach, out threshold must be way lower 
+        if(self.filter.max_mic_level_detected<HighPass.MINTHRESHOLD*10):
+            self.filter.max_mic_level_detected=HighPass.MINTHRESHOLD*10 #we cannot set max_mic_level_detected too low and at the start, when there were no vocalizations it could be quite low
 
-        # if(not self.bInitializePrevLevel):
-        #     self.filter.InitializePrevLevel()
-        #     self.bInitializePrevLevel=True
-        #     return self.line, 
+        if(not self.bInitializePrevLevel):
+            self.filter.InitializePrevLevel()
+            self.bInitializePrevLevel=True
+            return self.line, 
 
-        # timer = time.time()
+        timer = time.time()
 
-        # if(abs(timer - self.prev) < self.waitTime):
-        #     self.filter.FillPrevLevel()
-        #     return self.line,
+        if(abs(timer - self.prev) < self.waitTime):
+            self.filter.FillPrevLevel()
+            return self.line,
 
-        # # print(self.filter.m_5buff, self.filter.Threshold(1.5))
+        # print(self.filter.m_5buff, self.filter.Threshold(1.5))
 
-        # if (self.filter.m_5buff > self.filter.Threshold(1.5)):
-        #     # print("[{:.2f}]: detected!".format(timer))
-        #     self.line.set_color("r")
-        # else:
-        #     self.line.set_color('b')
+        if (self.filter.m_5buff > self.filter.Threshold(1.5)):
+            self.window.push(self.ydata[int(-1.5*16000):])
+            self.start = True
+            
+            # print("[{:.2f}]: detected!".format(timer))
+            self.line.set_color("r")
+        else:
+            self.line.set_color('b')
 
         return self.line,
 
