@@ -5,22 +5,17 @@ using Filter;
 using static MovingAverage.MovingAverage;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 //TODO: try https://stackoverflow.com/questions/22583391/peak-signal-detection-in-realtime-timeseries-data/53614452#53614452
 // TODO: bandpass filter? https://stackoverflow.com/questions/10373184/bandpass-butterworth-filter-implementation-in-c
 public class AudioTest : MonoBehaviour
 {
     public StreamingMic streamingMic;
-    public TMP_Text status;
-
     private float waitTime = 1.5f;
     private float timer = 0.0f;
     private bool bInitializePrevLevel = false;
     
     // clap detection flags
-    private bool lastState = false;
-    private bool currentState = false;
     private bool tempState;
     private DateTime lastTime;
     private double clapDelay = 2000.0;
@@ -136,7 +131,7 @@ public class AudioTest : MonoBehaviour
                     int idx = m[i];
                     if (idx != -1) {
                         m_amp[i] = filtered[idx];
-                    } else {m_amp[i] = 0;} // if m[4] or m[5] are negative make sure they are at the end when sorted
+                    } else {m_amp[i] = -2;} // if m[4] or m[5] are negative make sure they are at the end when sorted
                 }
 
                 // copy values
