@@ -67,7 +67,7 @@ public class AudioTest : MonoBehaviour
                 yield return new WaitForSeconds(0.02f);
             
             }
-            
+
             timer += Time.deltaTime; 
             if(timer < waitTime) {
                 streamingMic.FillPrevLevel(); 
@@ -89,16 +89,16 @@ public class AudioTest : MonoBehaviour
                     // get 1.5 seconds before threshold detected
                     tail = streamingMic._samples.slice(start, stop);
 
-                    Debug.Log("head: " + streamingMic._samples._head);
+                    // Debug.Log("head: " + streamingMic._samples._head);
 
                     // wait for at least 1.5 seconds of new audio data
                     // TODO: don't stop execution because it halts everything
                     // instead find a way to return to execution when the condition is met
-                    // while (Math.Abs(streamingMic._samples._head - stop) < half) {};
-                    yield return new WaitUntil(() => 
-                        (Math.Abs(streamingMic._samples._head - stop) >= half));
+                    while (Math.Abs(streamingMic._samples._head - stop) < half) {yield return null;}
+                    // yield return new WaitUntil(() => 
+                    //     (Math.Abs(streamingMic._samples._head - stop) >= half));
 
-                    Debug.Log("head: " + streamingMic._samples._head);
+                    // Debug.Log("head: " + streamingMic._samples._head);
 
                     // get 1.5 latter seconds
                     head = streamingMic._samples.slice(stop, stop + half);
