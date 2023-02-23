@@ -887,7 +887,7 @@ ModelImporter:
     second: Run
   - first:
       74: 7400032
-    second: clap
+    second: idle
   - first:
       74: 7400034
     second: Gum bubble
@@ -1429,7 +1429,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: clap
+      name: idle
       takeName: Idle
       internalID: 7400032
       firstFrame: 632

@@ -18,7 +18,7 @@ public class ChangeScene : MonoBehaviour
        // menu.SetActive(false);
        // StartCoroutine(LoadScene(sceneID));
        prompt.SetActive(false);
-        StartCoroutine(LoadSceneAsync(sceneID));
+       StartCoroutine(LoadSceneAsync(sceneID));
     }
 
     IEnumerator LoadSceneAsync(int sceneID)

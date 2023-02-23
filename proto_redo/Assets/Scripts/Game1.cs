@@ -2,7 +2,7 @@ using System.Security.AccessControl;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static micRequest.requestAccess;
 
 public class Game1 : MonoBehaviour 
 {
@@ -28,6 +28,7 @@ public class Game1 : MonoBehaviour
     private bool complete;
     
     void Start() {
+        micRequest.requestAccess.req();
         correct_prompt.SetActive(false);
         incorrect_prompt.SetActive(false);
         prompt.SetActive(true);
