@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ClapAudio.Play;
-
+using ClapDetector;
 public class Game3 : MonoBehaviour
 {
+    private ClapDetector.ClapDetector clapDetector;
     public GameObject rabbit;
     public GameObject destination2;
 
@@ -14,6 +15,8 @@ public class Game3 : MonoBehaviour
     public string microphone;
     AudioSource audioSource; 
     bool done;
+
+    bool isListening;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +24,8 @@ public class Game3 : MonoBehaviour
         target2 = destination2.transform.position;
         audioSource = GetComponent<AudioSource>();
         done = false;
+        isListening = false;
+        clapDetector = new ClapDetector.ClapDetector();
         // get all available microphones
 		foreach (string device in Microphone.devices) {
 			if (microphone == null) {
@@ -40,8 +45,13 @@ public class Game3 : MonoBehaviour
         if (distFromTarget2 <= 3 && !done)
         {
             // rabbit is at campfire location, begin game
-            playAudio();
-            Debug.Log("done playing");
+            // playAudio();
+            if (!isListening) {
+                clapDetector.Listen();
+                isListening = true;
+            }
+            // clapDetector.Listen();
+            // Debug.Log("done playing");
         }
     }
 
