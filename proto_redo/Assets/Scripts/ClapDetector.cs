@@ -51,11 +51,12 @@ namespace ClapDetector {
         public void Listen() {
             streamingMic.StartRecording();
             lastTime = System.DateTime.Now;
-            int cid = Runnable.Run(CountPeaks());
+            cid = Runnable.Run(CountPeaks());
         }
 
         public void Stop() {
             Runnable.Stop(cid);
+            cid = 0;
             streamingMic.StopRecording();
         }
 
