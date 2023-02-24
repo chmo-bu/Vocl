@@ -26,7 +26,6 @@ namespace ClapDetector {
         FilterButterworth lp;
 
         /* variables for peak counting */
-        private float[] window = new float[48000];
         // to hold filtered audio data for analysis
         private float[] filtered = new float[48000];
         // calculate indices for audio data
@@ -95,25 +94,25 @@ namespace ClapDetector {
                         // wait for at least 1.5 seconds of new audio data
                         // TODO: don't stop execution because it halts everything
                         // instead find a way to return to execution when the condition is met
-                        while (Math.Abs(streamingMic._samples._head - stop) < half) {yield return null;}
-                        // yield return new WaitUntil(() => 
-                        //     (Math.Abs(streamingMic._samples._head - stop) >= half));
+                        // while (Math.Abs(streamingMic._samples._head - stop) < half) {yield return null;}
+                        yield return new WaitUntil(() => 
+                            (Math.Abs(streamingMic._samples._head - stop) >= half));
 
                         // Debug.Log("head: " + streamingMic._samples._head);
 
                         // get 1.5 latter seconds
                         head = streamingMic._samples.slice(stop, stop + half);
 
-                        Array.Copy(tail, 0, window, 0, half); // copy first 1.5 seconds
-                        Array.Copy(head, 0, window, half, half); // copy latter 1.5 seconds
+                        Array.Copy(tail, 0, filtered, 0, half); // copy first 1.5 seconds
+                        Array.Copy(head, 0, filtered, half, half); // copy latter 1.5 seconds
 
                         // initialize first two inputs of butterworth filters
-                        hp.filterInit(window[0], window[1]);
-                        lp.filterInit(window[0], window[1]);
+                        hp.filterInit(filtered[0], filtered[1]);
+                        lp.filterInit(filtered[0], filtered[1]);
 
                         // high pass at 600hz and next low pass at 3000hz
                         for (int i=2; i<48000; i++) {
-                            filtered[i] = hp.Update(window[i]);
+                            filtered[i] = hp.Update(filtered[i]);
                             filtered[i] = lp.Update(filtered[i]);
                         }
 
