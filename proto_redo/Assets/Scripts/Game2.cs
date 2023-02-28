@@ -68,7 +68,7 @@ public class Game2 : MonoBehaviour
             {
                 moving = false;
                 timer = 17f; // reset timer
-                rabbit.transform.Rotate(0,310,0);
+                rabbit.transform.Rotate(0,350,0);
                 currentAnimator.runtimeAnimatorController = idle;
             }
         }
@@ -95,7 +95,7 @@ public class Game2 : MonoBehaviour
             correct_prompt.SetActive(true);
             currentAnimator.runtimeAnimatorController = CelebrateRun;
             complete = true;
-            rabbit.transform.Rotate(0,45,0);
+            rabbit.transform.Rotate(0,15,0);
             moving = true;
         }
         else
