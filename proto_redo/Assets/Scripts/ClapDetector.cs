@@ -5,10 +5,12 @@ using Filter;
 using static MovingAverage.MovingAverage;
 using StreamingMic;
 using UnityEngine;
+//using static Game3.completeTask;
 
 namespace ClapDetector {
     public class ClapDetector
     {
+        public bool done;
         public StreamingMic.StreamingMic streamingMic = new StreamingMic.StreamingMic();
         private float waitTime = 1.5f;
         private float timer = 0.0f;
@@ -49,6 +51,7 @@ namespace ClapDetector {
         }
 
         public void Listen() {
+            done = false;
             streamingMic.StartRecording();
             lastTime = System.DateTime.Now;
             cid = Runnable.Run(CountPeaks());
@@ -58,6 +61,19 @@ namespace ClapDetector {
             Runnable.Stop(cid);
             cid = 0;
             streamingMic.StopRecording();
+        }
+
+        public bool checkCount(int claps)
+        {
+            if (claps == 3)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         private IEnumerator CountPeaks() {
@@ -194,7 +210,7 @@ namespace ClapDetector {
                             } else {break;}
                         }
                         Debug.Log("clap count: " + clapCount);
-                        
+                        done = checkCount(clapCount);
                     }
                 }
                 yield return new WaitForSeconds(0.02f);

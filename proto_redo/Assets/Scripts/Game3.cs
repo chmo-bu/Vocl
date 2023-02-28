@@ -14,7 +14,10 @@ public class Game3 : MonoBehaviour
 
     public string microphone;
     AudioSource audioSource; 
-    bool done;
+    public bool complete;
+
+    public GameObject correct_prompt;
+    public RuntimeAnimatorController celebrate;
 
     bool isListening;
     // Start is called before the first frame update
@@ -23,8 +26,9 @@ public class Game3 : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         target2 = destination2.transform.position;
         audioSource = GetComponent<AudioSource>();
-        done = false;
+        complete = false;
         isListening = false;
+        correct_prompt.SetActive(false);
         clapDetector = new ClapDetector.ClapDetector();
         // get all available microphones
 		foreach (string device in Microphone.devices) {
@@ -40,19 +44,35 @@ public class Game3 : MonoBehaviour
     void Update()
     {
         rabbitLocation = rabbit.transform.position;
+        Animator currentAnimator = rabbit.GetComponent<Animator>();
         float distFromTarget2 = Vector3.Distance(rabbitLocation, target2);
 
-        if (distFromTarget2 <= 3 && !done)
+        if (distFromTarget2 <= 3 && !complete)
         {
             // rabbit is at campfire location, begin game
             // playAudio();
             if (!isListening) {
                 clapDetector.Listen();
                 isListening = true;
+                //clapDetector.checkCount()
+                if (clapDetector.done == true)
+                {
+                    Debug.Log(clapDetector.done);
+                    completeTask();
+                    currentAnimator.runtimeAnimatorController = celebrate;
+                   // clapDetector.Stop();
+                }
+
             }
             // clapDetector.Listen();
             // Debug.Log("done playing");
         }
+    }
+
+    public void completeTask()
+    {
+        complete = true;
+        correct_prompt.SetActive(true);
     }
 
     void playAudio()
@@ -76,6 +96,6 @@ public class Game3 : MonoBehaviour
 			Debug.Log (microphone + " doesn't work!");
 		}
        
-        done = true;
+        complete = true;
     }
 }
