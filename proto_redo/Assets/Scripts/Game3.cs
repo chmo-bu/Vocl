@@ -17,16 +17,22 @@ public class Game3 : MonoBehaviour
     public bool complete;
 
     public GameObject correct_prompt;
+    public GameObject clap_prompt;
     public RuntimeAnimatorController celebrate;
+    public RuntimeAnimatorController idle;
+    
+    private float timer;
 
     bool isListening;
     // Start is called before the first frame update
     void Start()
     {
+        clap_prompt.SetActive(true);
         rabbitLocation = rabbit.transform.position;
         target2 = destination2.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
+        timer = 9f;
         isListening = false;
         correct_prompt.SetActive(false);
         clapDetector = new ClapDetector.ClapDetector();
@@ -47,55 +53,38 @@ public class Game3 : MonoBehaviour
         Animator currentAnimator = rabbit.GetComponent<Animator>();
         float distFromTarget2 = Vector3.Distance(rabbitLocation, target2);
 
+        if (timer != 0f && complete == true)
+        {
+            timer = timer - .5f;
+        }
+
         if (distFromTarget2 <= 3 && !complete)
         {
             // rabbit is at campfire location, begin game
-            // playAudio();
             if (!isListening) {
                 clapDetector.Listen();
                 isListening = true;
-                //clapDetector.checkCount()
-                if (clapDetector.done == true)
-                {
-                    Debug.Log(clapDetector.done);
-                    completeTask();
-                    currentAnimator.runtimeAnimatorController = celebrate;
-                   // clapDetector.Stop();
-                }
-
             }
-            // clapDetector.Listen();
-            // Debug.Log("done playing");
+            
+            // check if task is complete
+            if (clapDetector.done == true)
+            {
+                completeTask();
+                currentAnimator.runtimeAnimatorController = celebrate;
+                clapDetector.Stop();
+            }
+        }
+        else if (complete && timer == 0)
+        {
+            currentAnimator.runtimeAnimatorController = idle;
+            timer = 9f; // reset timer
         }
     }
 
     public void completeTask()
     {
         complete = true;
+        clap_prompt.SetActive(false);
         correct_prompt.SetActive(true);
-    }
-
-    void playAudio()
-    {
-        //ClapAudio.Play.playAudio();
-            
-            audioSource.Stop();
-            audioSource.clip = Microphone.Start(microphone, false, 10, 44100);
-            Debug.Log(Microphone.IsRecording(microphone).ToString());
-            if (Microphone.IsRecording (microphone)) { //check that the mic is recording, otherwise you'll get stuck in an infinite loop waiting for it to start
-			while (!(Microphone.GetPosition (microphone) > 0)) {
-			} // Wait until the recording has started. 
-		
-			Debug.Log ("recording started with " + microphone);
-
-			// Start playing the audio source
-			audioSource.Play (); 
-		} else {
-			//microphone doesn't work for some reason
-
-			Debug.Log (microphone + " doesn't work!");
-		}
-       
-        complete = true;
     }
 }
