@@ -7989,7 +7989,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248003733}
-  m_LocalRotation: {x: 0.13273314, y: -1.8488617e-25, z: 2.4759595e-26, w: 0.99115187}
+  m_LocalRotation: {x: 0.13273314, y: -1.8490589e-25, z: 2.4762238e-26, w: 0.99115187}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11480,7 +11480,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386705210}
   m_LocalRotation: {x: -0, y: 0.17364816, z: -0, w: 0.9848078}
-  m_LocalPosition: {x: 25.07, y: 0.46, z: -16.2}
+  m_LocalPosition: {x: 21.46, y: 3.48, z: -14.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31217,7 +31217,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1026645527}
-  m_LocalRotation: {x: 0.22975293, y: 2.6645353e-15, z: -8.8817837e-16, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: -0.00000001450254, z: 0.000000003423585, w: 0.973249}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68584,7 +68584,9 @@ MonoBehaviour:
   microphone: 
   complete: 0
   correct_prompt: {fileID: 386705210}
+  clap_prompt: {fileID: 74363342}
   celebrate: {fileID: 9100000, guid: e174d2e5b966345c787c5378917e58b0, type: 2}
+  idle: {fileID: 9100000, guid: 5add07882dc4d4240a70251c1829385a, type: 2}
 --- !u!82 &2122577963
 AudioSource:
   m_ObjectHideFlags: 0
