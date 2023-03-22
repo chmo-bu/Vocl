@@ -37,5 +37,5 @@ def handle_request():
     
     if (img is not None):
         return Response(img.getvalue(), mimetype='image/png')
-    else:
-        return "nothing"
+    
+    return "nothing"
