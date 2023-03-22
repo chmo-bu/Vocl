@@ -6,6 +6,7 @@ using static MovingAverage.MovingAverage;
 // using StreamingMic;
 using UnityEngine;
 using TCPSocket;
+using UnityEngine.Networking;
 //using static Game3.completeTask;
 
 // namespace ClapDetector {
@@ -31,7 +32,7 @@ public class ClapDetector : MonoBehaviour
 
     /* variables for peak counting */
     // to hold filtered audio data for analysis
-    private float[] filtered = new float[48000];
+    private float[] filtered;
     // calculate indices for audio data
     private int start;
     private int stop;
@@ -112,30 +113,21 @@ public class ClapDetector : MonoBehaviour
             if (tempState && ((double)((TimeSpan)(System.DateTime.Now
             - lastTime)).TotalMilliseconds) > clapDelay) {
                 lastTime = System.DateTime.Now;
-                if (streamingMic._samples._length >= half) {
-                    // calculate indices for audio data
-                    start = streamingMic._samples._head - half;
-                    stop = streamingMic._samples._head;
+                int currCount = streamingMic._samples.Count;
+                if (currCount >= half) {
+                    // set detection flag to notify streaming mic
+                    // that we have reached the threshold
+                    streamingMic.detected = true;
 
-                    // get 1.5 seconds before threshold detected
-                    tail = streamingMic._samples.slice(start, stop);
-
-                    // Debug.Log("head: " + streamingMic._samples._head);
-
-                    // wait for at least 1.5 seconds of new audio data
-                    // TODO: don't stop execution because it halts everything
-                    // instead find a way to return to execution when the condition is met
-                    // while (Math.Abs(streamingMic._samples._head - stop) < half) {yield return null;}
+                    // wait until 48000 samples
                     yield return new WaitUntil(() => 
-                        (Math.Abs(streamingMic._samples._head - stop) >= half));
+                        (streamingMic.detected == false));
 
-                    // Debug.Log("head: " + streamingMic._samples._head);
+                    // get sample window
+                    filtered = streamingMic._samples.ToArray();
 
-                    // get 1.5 latter seconds
-                    head = streamingMic._samples.slice(stop, stop + half);
-
-                    Array.Copy(tail, 0, filtered, 0, half); // copy first 1.5 seconds
-                    Array.Copy(head, 0, filtered, half, half); // copy latter 1.5 seconds
+                    // clear buffer
+                    streamingMic._samples.Clear();
 
                     // initialize first two inputs of butterworth filters
                     hp.filterInit(filtered[0], filtered[1]);
@@ -150,9 +142,12 @@ public class ClapDetector : MonoBehaviour
                     // run a 5-point moving average
                     filtered = MovingAverage.MovingAverage.run(filtered, 5);
 
-                    Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
+                    // Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
                     
-                    client.SendMessage(byteData);
+                    // client.SendMessage(byteData);
+
+                    // UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052", formData);
+                    // yield return www.SendWebRequest();
 
                     // Debug.Log("data = " + String.Join(",",
                     // new List<float>(filtered)

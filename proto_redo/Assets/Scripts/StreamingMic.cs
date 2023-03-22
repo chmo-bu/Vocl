@@ -36,12 +36,14 @@ public class StreamingMic : MonoBehaviour
     private readonly float frequency=500;//highpass cutoff frequency (Hz)
     private readonly int sampleRate=16000;//same as m_nRecordingHZ
     FilterButterworth hp; // high pass filter
-    public RollArray<float> _samples = new RollArray<float>(48000); // 3-second buffer
+    // public RollArray<float> _samples = new RollArray<float>(48000); // 3-second buffer
+    public Queue<float> _samples = new Queue<float>();
 
     // public StreamingMic() {
     //     hp = new FilterButterworth(frequency, sampleRate, 
     //         FilterButterworth.PassType.Highpass, resonance);
     // }
+    public bool detected = false;
 
     void Start() {
         hp = new FilterButterworth(frequency, sampleRate, 
@@ -123,7 +125,13 @@ public class StreamingMic : MonoBehaviour
 
                 for (int i=2; i<nsamplesarray; i++) { 
                     filtered[i]=hp.Update(samples[i]);
-                    _samples.push(samples[i]);
+                    if (_samples.Count <= 24000 || detected == true) {
+                    // _samples.push(samples[i]);
+                        _samples.Enqueue(samples[i]);
+                        if (_samples.Count == 48000) {
+                            detected = false;
+                        }
+                    }
                 }
                 // Debug.Log(_samples._head);
 
