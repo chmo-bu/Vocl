@@ -1,0 +1,3 @@
+# How to run
+
+flask --app VoclServer run --port [PORT]
