@@ -232,7 +232,7 @@ public class ClapDetector : MonoBehaviour
                     formData.AddField("peaks", String.Join(",", m));
                     formData.AddField("claps", clapCount.ToString());
                     
-                    UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052", formData);
+                    UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052/data", formData);
                     yield return www.SendWebRequest();
                 }
             }
