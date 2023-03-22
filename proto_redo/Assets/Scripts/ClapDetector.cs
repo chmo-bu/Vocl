@@ -5,6 +5,7 @@ using Filter;
 using static MovingAverage.MovingAverage;
 // using StreamingMic;
 using UnityEngine;
+using TCPSocket;
 //using static Game3.completeTask;
 
 // namespace ClapDetector {
@@ -44,6 +45,10 @@ public class ClapDetector : MonoBehaviour
 
     private int cid = 0; // runnable id
 
+    private TCPClient client;
+
+    private byte[] byteData = new byte[48000*sizeof(float)];
+
     // Constructor
     // public ClapDetector()
     // {
@@ -53,6 +58,7 @@ public class ClapDetector : MonoBehaviour
 
     void Start()
     {
+        client = new TCPClient();
         hp = new FilterButterworth(600, 16000, FilterButterworth.PassType.Highpass, resonance);
         lp = new FilterButterworth(3000, 16000, FilterButterworth.PassType.Lowpass, resonance);
     }
@@ -84,7 +90,8 @@ public class ClapDetector : MonoBehaviour
     }
 
     private IEnumerator CountPeaks() {
-        while (!done) {
+        while (true) {
+        // while (!done) {
             if(!bInitializePrevLevel){
                 streamingMic.InitializePrevLevel(); 
                 bInitializePrevLevel=true;
@@ -142,6 +149,15 @@ public class ClapDetector : MonoBehaviour
 
                     // run a 5-point moving average
                     filtered = MovingAverage.MovingAverage.run(filtered, 5);
+
+                    Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
+                    
+                    client.SendMessage(byteData);
+
+                    // Debug.Log("data = " + String.Join(",",
+                    // new List<float>(filtered)
+                    // .ConvertAll(i => i.ToString())
+                    // .ToArray()));
 
                     // peak finding procedure:
                     // NOTE: 0.25 * 3 seconds = 12000 samples b/c sample rate is 16000
