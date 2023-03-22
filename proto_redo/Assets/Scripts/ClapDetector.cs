@@ -48,7 +48,7 @@ public class ClapDetector : MonoBehaviour
 
     private TCPClient client;
 
-    private byte[] byteData = new byte[48000*sizeof(float)];
+    // private byte[] byteData = new byte[48000*sizeof(float)];
 
     // Constructor
     // public ClapDetector()
@@ -142,7 +142,7 @@ public class ClapDetector : MonoBehaviour
                     // run a 5-point moving average
                     filtered = MovingAverage.MovingAverage.run(filtered, 5);
 
-                    Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
+                    // Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
                     
                     // client.SendMessage(byteData);
 
