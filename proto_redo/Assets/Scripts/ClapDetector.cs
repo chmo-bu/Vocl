@@ -59,7 +59,7 @@ public class ClapDetector : MonoBehaviour
 
     void Start()
     {
-        client = new TCPClient();
+        // client = new TCPClient();
         hp = new FilterButterworth(600, 16000, FilterButterworth.PassType.Highpass, resonance);
         lp = new FilterButterworth(3000, 16000, FilterButterworth.PassType.Lowpass, resonance);
     }
@@ -142,12 +142,9 @@ public class ClapDetector : MonoBehaviour
                     // run a 5-point moving average
                     filtered = MovingAverage.MovingAverage.run(filtered, 5);
 
-                    // Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
+                    Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
                     
                     // client.SendMessage(byteData);
-
-                    // UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052", formData);
-                    // yield return www.SendWebRequest();
 
                     // Debug.Log("data = " + String.Join(",",
                     // new List<float>(filtered)
@@ -229,6 +226,14 @@ public class ClapDetector : MonoBehaviour
                     }
                     Debug.Log("clap count: " + clapCount);
                     done = checkCount(clapCount);
+
+                    WWWForm formData = new WWWForm();
+                    formData.AddField("data", String.Join(",", filtered));
+                    formData.AddField("peaks", String.Join(",", m));
+                    formData.AddField("claps", clapCount.ToString());
+                    
+                    UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052", formData);
+                    yield return www.SendWebRequest();
                 }
             }
             yield return new WaitForSeconds(0.02f);
