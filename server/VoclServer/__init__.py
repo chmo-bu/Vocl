@@ -47,7 +47,4 @@ def _send_data():
     
 @app.route("/send", methods=["GET"])
 def send_data():
-    global img
-    if (img is not None):
-        return Response(_send_data(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    return "nothing"
+    return Response(_send_data(), mimetype='multipart/x-mixed-replace; boundary=frame')
