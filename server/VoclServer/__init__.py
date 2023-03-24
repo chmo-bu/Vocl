@@ -9,9 +9,9 @@ img = None
 
 @app.route("/", methods=["GET"])
 def index():
-    return '<img src="/data" alt="my plot">'
+    return "<img src=\"/send\" alt=\"my plot\">"
 
-@app.route("/data", methods=["POST", "GET"])
+@app.route("/data", methods=["POST"])
 def handle_request():
     global img
     
@@ -32,10 +32,22 @@ def handle_request():
         axis.legend()
         axis.set_title("{} clap(s)".format(request.form["claps"]))
         output = io.BytesIO()
-        FigureCanvas(fig).print_png(output)
-        img = output
+        FigureCanvas(fig).print_jpg(output)
+        img = output.getvalue()
+        img = (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n')
     
+    return "nothing"
+
+def _send_data():
+    while True:
+        if (img is None):
+            continue
+        yield img
+    
+@app.route("/send", methods=["GET"])
+def send_data():
+    global img
     if (img is not None):
-        return Response(img.getvalue(), mimetype='image/png')
-    
+        return Response(_send_data(), mimetype='multipart/x-mixed-replace; boundary=frame')
     return "nothing"
