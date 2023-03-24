@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ClapAudio.Play;
-using ClapDetector;
+// using ClapDetector;
 public class Game3 : MonoBehaviour
 {
-    private ClapDetector.ClapDetector clapDetector;
+    // private ClapDetector.ClapDetector clapDetector;
+    public ClapDetector clapDetector;
     public GameObject rabbit;
     public GameObject destination2;
 
@@ -35,7 +36,7 @@ public class Game3 : MonoBehaviour
         timer = 9f;
         isListening = false;
         correct_prompt.SetActive(false);
-        clapDetector = new ClapDetector.ClapDetector();
+        // clapDetector = new ClapDetector.ClapDetector();
         // get all available microphones
 		foreach (string device in Microphone.devices) {
 			if (microphone == null) {
