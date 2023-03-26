@@ -6,6 +6,9 @@ public class buttonControl : MonoBehaviour
 {
     public GameObject submitButton;
     public GameObject homeButton;
+    public GameObject EndofGame;
+    public GameObject playAgainbutton;
+    public GameObject mainMenubutton;
     public GameObject rabbit;
     public GameObject startLocation;
     public GameObject destination1;
@@ -27,6 +30,9 @@ public class buttonControl : MonoBehaviour
         start = startLocation.transform.position;
         submitButton.SetActive(false);
         homeButton.SetActive(true);
+        EndofGame.SetActive(false);
+        playAgainbutton.SetActive(false);
+        mainMenubutton.SetActive(false);
     }
 
     void Update()

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ClapAudio.Play;
 // using ClapDetector;
 public class Game3 : MonoBehaviour
 {
@@ -19,6 +18,9 @@ public class Game3 : MonoBehaviour
 
     public GameObject correct_prompt;
     public GameObject clap_prompt;
+    public GameObject EndofGame;
+    public GameObject playAgainbutton;
+    public GameObject mainMenubutton;
     public RuntimeAnimatorController celebrate;
     public RuntimeAnimatorController idle;
     
@@ -77,8 +79,13 @@ public class Game3 : MonoBehaviour
         }
         else if (complete && timer == 0)
         {
-            currentAnimator.runtimeAnimatorController = idle;
-            timer = 9f; // reset timer
+            //currentAnimator.runtimeAnimatorController = idle;
+            //timer = 9f; // reset timer
+            // display end of game menu
+            correct_prompt.SetActive(false);
+            EndofGame.SetActive(true);
+            playAgainbutton.SetActive(true);
+            mainMenubutton.SetActive(true);
         }
     }
 
