@@ -33,5 +33,10 @@ public class ChangeScene : MonoBehaviour
 
        // loadingObject.SetActive(false);
     }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
     
 }
