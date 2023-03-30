@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 355987664}
-  m_IndirectSpecularColor: {r: 0.18342178, g: 0.2290127, b: 0.3059794, a: 1}
+  m_IndirectSpecularColor: {r: 0.1834917, g: 0.2290883, b: 0.30608332, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -836,7 +836,7 @@ Terrain:
   m_TreeCrossFadeLength: 0
   m_TreeMaximumFullLODCount: 10000
   m_DetailObjectDistance: 150
-  m_DetailObjectDensity: 0.39
+  m_DetailObjectDensity: 0
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
@@ -21870,7 +21870,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2244133390816437729}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac8d16f0735fc6449a63fb3da094d179, type: 3}
   m_Name: 
