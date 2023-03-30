@@ -1,7 +1,12 @@
 from flask import Flask, request, Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+import tensorflow as tf
+import tensorflow_io as tfio
+import numpy as np
+import pandas as pd
 import io
+import csv
 
 app = Flask(__name__)
 
@@ -9,12 +14,13 @@ img = None
 
 @app.route("/", methods=["GET"])
 def index():
-    return '<img src="/data" alt="my plot">'
+    return "<img src=\"/send\" alt=\"my plot\">"
 
-@app.route("/data", methods=["POST", "GET"])
+@app.route("/data", methods=["POST"])
 def handle_request():
     global img
-    
+    interpreter = tf.lite.Interpreter('./audioML.tflite')
+
     if (request.method == "POST"):
         fig = Figure()
         axis = fig.add_subplot(1, 1, 1)
@@ -32,10 +38,46 @@ def handle_request():
         axis.legend()
         axis.set_title("{} clap(s)".format(request.form["claps"]))
         output = io.BytesIO()
-        FigureCanvas(fig).print_png(output)
-        img = output
-    
-    if (img is not None):
-        return Response(img.getvalue(), mimetype='image/png')
+        FigureCanvas(fig).print_jpg(output)
+        img = output.getvalue()
+        img = (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n')
+        
+        input_details = interpreter.get_input_details()
+        waveform_input_index = input_details[0]['index']
+        output_details = interpreter.get_output_details()
+        scores_output_index = output_details[0]['index']
+        embeddings_output_index = output_details[1]['index']
+        spectrogram_output_index = output_details[2]['index']
+
+        waveform = request.form["data"]
+	
+        interpreter.resize_tensor_input(waveform_input_index, [len(waveform)], strict=True)
+        interpreter.allocate_tensors()
+        interpreter.set_tensor(waveform_input_index, waveform)
+        interpreter.invoke()
+        scores, embeddings, spectrogram = (
+            interpreter.get_tensor(scores_output_index),
+            interpreter.get_tensor(embeddings_output_index),
+            interpreter.get_tensor(spectrogram_output_index))
+        max_score = scores.mean(axis=0).argmax()
+        if max_score < 40:
+            classification = "yelling"
+        elif max_score > 55:
+            classification = "clapping"
+        else:
+            classification = "stomping"
+        return Flask.make_response(classification, 200)
     
     return "nothing"
+    
+
+def _send_data():
+    while True:
+        if (img is None):
+            continue
+        yield img
+    
+@app.route("/send", methods=["GET"])
+def send_data():
+    return Response(_send_data(), mimetype='multipart/x-mixed-replace; boundary=frame')
