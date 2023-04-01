@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import tensorflow as tf
@@ -50,7 +50,7 @@ def handle_request():
         embeddings_output_index = output_details[1]['index']
         spectrogram_output_index = output_details[2]['index']
 
-        waveform = request.form["data"]
+        waveform = np.array(y).astype('float32')
 	
         interpreter.resize_tensor_input(waveform_input_index, [len(waveform)], strict=True)
         interpreter.allocate_tensors()
@@ -67,7 +67,10 @@ def handle_request():
             classification = "clapping"
         else:
             classification = "stomping"
-        return Flask.make_response(classification, 200)
+        # response = Flask.make_response(jsonify({"classification": classification}), 200)
+        # response.headers['Content-Type'] = 'application/json'
+        return jsonify({"classification": classification})
+        # return Response(jsonify({"classification": classification}), mimetype='application/json')
     
     return "nothing"
     
