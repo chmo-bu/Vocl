@@ -83,12 +83,12 @@ public class Game1 : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0 && complete == false)
         {
             //Touch touch = Input.GetTouch(0);
            // Vector3 touchPosition = Camera.main.ScreenToWorldPoint(touch.position);
              
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
         
             RaycastHit hitInfo;
 
