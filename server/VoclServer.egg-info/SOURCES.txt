@@ -1,0 +1,10 @@
+MANIFEST.in
+README
+setup.py
+VoclServer/__init__.py
+VoclServer/audioML.tflite
+VoclServer.egg-info/PKG-INFO
+VoclServer.egg-info/SOURCES.txt
+VoclServer.egg-info/dependency_links.txt
+VoclServer.egg-info/requires.txt
+VoclServer.egg-info/top_level.txt
