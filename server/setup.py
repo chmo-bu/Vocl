@@ -9,7 +9,7 @@ setup(
         'flask',
         'matplotlib',
         'tensorflow',
-        'tensorflow_io',
+        #'tensorflow_io',
         'numpy',
         'pandas'
     ],

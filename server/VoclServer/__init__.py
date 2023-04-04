@@ -2,7 +2,7 @@ from flask import Flask, request, Response, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import tensorflow as tf
-import tensorflow_io as tfio
+#import tensorflow_io as tfio
 import numpy as np
 import pandas as pd
 import io
