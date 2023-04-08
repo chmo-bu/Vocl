@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4abcbc602b766504abba4e2bee93f8c1, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e4553d046fb68f04eb04d63cccc4789b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1335076332}
-  m_IndirectSpecularColor: {r: 0.5775995, g: 0.71588844, b: 0.6345376, a: 1}
+  m_IndirectSpecularColor: {r: 0.4241144, g: 0.28833255, b: 0.39856127, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -520,7 +520,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &256922056
 TerrainCollider:
@@ -688,7 +688,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &373544488
 TerrainCollider:
@@ -1179,7 +1179,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &604292039
 TerrainCollider:
@@ -1347,7 +1347,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &730877150
 TerrainCollider:
@@ -1689,7 +1689,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &979353341
 TerrainCollider:
@@ -1910,6 +1910,96 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 785383061}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1166652967
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1397777944}
+    m_Modifications:
+    - target: {fileID: 356178134188657264, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_Name
+      value: Prefab_Terrain_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 82.26626
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 82.26626
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 82.26626
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2072
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 365
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2533
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bf382aa0c9c7a3d49a0f8673764e7d76, type: 3}
+--- !u!4 &1166652968 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 356178134188693072, guid: bf382aa0c9c7a3d49a0f8673764e7d76,
+    type: 3}
+  m_PrefabInstance: {fileID: 1166652967}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1174339830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +2031,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &1174339832
 TerrainCollider:
@@ -2025,7 +2115,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &1197996342
 TerrainCollider:
@@ -2193,7 +2283,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &1253330887
 TerrainCollider:
@@ -2648,6 +2738,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1166652968}
   - {fileID: 1855267716}
   - {fileID: 373544487}
   - {fileID: 2120311881}
@@ -2789,7 +2880,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &1667963354
 TerrainCollider:
@@ -3215,7 +3306,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &1855267717
 TerrainCollider:
@@ -3677,7 +3768,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1397777944}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &2120311882
 TerrainCollider:
