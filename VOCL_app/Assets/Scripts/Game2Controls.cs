@@ -10,6 +10,7 @@ public class Game2Controls : MonoBehaviour
     public GameObject yesButton;
     public GameObject noButton;
     public GameObject prompt1;
+    public GameObject basket;
    // public GameObject rabbit;
   //  public GameObject startLocation;
    // public GameObject destination1;
@@ -22,6 +23,7 @@ public class Game2Controls : MonoBehaviour
    // public Vector3 target2;
    // public Vector3 start;
     public double timer;
+    public bool startUpDone;
 
 
     void Start()
@@ -37,6 +39,8 @@ public class Game2Controls : MonoBehaviour
         yesButton.SetActive(false);
         noButton.SetActive(false);
         prompt1.SetActive(false);
+        basket.SetActive(false);
+        startUpDone = false;
         timer = 2000;
     }
 
@@ -48,11 +52,16 @@ public class Game2Controls : MonoBehaviour
         {
             timer = timer - 1.0;
         }
-        else
+        else if (startUpDone == false)
         {
             mainPrompt.SetActive(false);
             homeButton.SetActive(true);
             prompt1.SetActive(true);
+            basket.SetActive(true);
+        }
+        else if (timer == 0)
+        {
+            startUpDone = true;
         }
        
         //float distFromStart = Vector3.Distance(rabbitLocation, start);
