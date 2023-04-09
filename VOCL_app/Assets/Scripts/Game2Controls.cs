@@ -48,21 +48,23 @@ public class Game2Controls : MonoBehaviour
     {
         //rabbitLocation = rabbit.transform.position;
         //Animator currentAnimator = rabbit.GetComponent<Animator>();
-        if (timer != 0)
-        {
-            timer = timer - 1.0;
-        }
-        else if (startUpDone == false)
-        {
-            mainPrompt.SetActive(false);
-            homeButton.SetActive(true);
-            prompt1.SetActive(true);
-            basket.SetActive(true);
-        }
-        else if (timer == 0)
+        if (timer == 0)
         {
             startUpDone = true;
         }
+        
+        if (!startUpDone)
+        {
+            timer = timer - 1.0;
+        }
+        else
+        {
+            mainPrompt.SetActive(false);
+            homeButton.SetActive(true);
+           // prompt1.SetActive(true);
+            basket.SetActive(true);
+        }
+        
        
         //float distFromStart = Vector3.Distance(rabbitLocation, start);
         //float distFromTarget1 = Vector3.Distance(rabbitLocation, target1);
