@@ -15,13 +15,15 @@ public class stompGame : MonoBehaviour
     AudioSource audioSource; 
     public bool complete;
 
+    public GameObject mainPrompt;
+    public GameObject stomp_prompt;
     public GameObject correct_prompt;
     public RuntimeAnimatorController celebrate;
     public RuntimeAnimatorController idle;
 
     public RuntimeAnimatorController candyMove;
     
-    private float timer;
+    public float timer;
     private bool moving;
 
     bool isListening;
@@ -31,7 +33,7 @@ public class stompGame : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
-        timer = 9f;
+        timer = 10f;
         moving = false;
         isListening = false;
         correct_prompt.SetActive(false);
@@ -58,6 +60,29 @@ public class stompGame : MonoBehaviour
             timer = timer - .5f;
         }
 
+        if (!complete && !moving && !mainPrompt.activeSelf)
+        {
+            // begin game
+            if (!isListening) {
+                stomp_prompt.SetActive(true);
+                detector.Listen(2);
+                isListening = true;
+            }
+            
+            // check if task is complete
+            if (detector.done == true)
+            {
+                completeTask();
+                currentAnimator.runtimeAnimatorController = celebrate;
+                candyAnimator.runtimeAnimatorController = candyMove;
+                detector.Stop();
+            }
+        }
+        //else if (complete && timer == 0)
+        //{
+          //  correct_prompt.SetActive(false);
+        //}
+
         /* Moves rabbit to next destination if running, if not then idle */
 
         if (moving == true && timer == 0)
@@ -79,38 +104,19 @@ public class stompGame : MonoBehaviour
             {
                 moving = false;
                 timer = 17f; // reset timer
-                rabbit.transform.Rotate(0,350,0);
+                //rabbit.transform.Rotate(0,350,0);
                 currentAnimator.runtimeAnimatorController = idle;
             }
         }
 
-        if (!complete && !moving)
-        {
-            // begin game
-            if (!isListening) {
-                detector.Listen(2);
-                isListening = true;
-            }
-            
-            // check if task is complete
-            if (detector.done == true)
-            {
-                completeTask();
-                currentAnimator.runtimeAnimatorController = celebrate;
-                candyAnimator.runtimeAnimatorController = candyMove;
-                detector.Stop();
-            }
-        }
-        else if (complete && timer == 0)
-        {
-            correct_prompt.SetActive(false);
-        }
+        
     }
 
     public void completeTask()
     {
         complete = true;
         moving = true;
+        stomp_prompt.SetActive(false);
         correct_prompt.SetActive(true);
     }
 }
