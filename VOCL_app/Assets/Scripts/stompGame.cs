@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class stompGame : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class stompGame : MonoBehaviour
     public GameObject rabbit;
     public GameObject destination1;
     public GameObject lollipop;
+    public GameObject basket;
 
     public Vector3 rabbitLocation;
 
@@ -33,7 +35,7 @@ public class stompGame : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
-        timer = 10f;
+        timer = 20f;
         moving = false;
         isListening = false;
         correct_prompt.SetActive(false);
@@ -55,9 +57,37 @@ public class stompGame : MonoBehaviour
         Animator candyAnimator = lollipop.GetComponent<Animator>();
 
 
-        if (timer != 0f && complete == true)
+        if (timer != 0f && complete == true && moving)
         {
             timer = timer - .5f;
+        }
+
+        /* Moves rabbit to next destination if running, if not then idle */
+
+        if (moving == true && timer == 0)
+        {
+            //basket.SetActive(false);
+            Vector3 rabbitLocation = rabbit.transform.position;
+            Vector3 target = destination1.transform.position;
+            var offset = target - rabbitLocation;
+            //Debug.Log(offset.magnitude);
+            if (offset.magnitude > 90f && moving == true) {
+                // If we're further away than 3 units, move towards the target.
+                // The minimum allowable tolerance varies with the speed of the object and the framerate.
+                // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
+                offset = offset.normalized * 400.0f;
+                //normalize it and account for movement speed.
+                rabbit.transform.position = rabbitLocation + (offset * Time.deltaTime);
+                
+            } 
+            else 
+            {
+                moving = false;
+                timer = 17f; // reset timer
+                //rabbit.transform.Rotate(0,350,0);
+                currentAnimator.runtimeAnimatorController = idle;
+                basket.SetActive(true);
+            }
         }
 
         if (!complete && !moving && !mainPrompt.activeSelf)
@@ -73,42 +103,12 @@ public class stompGame : MonoBehaviour
             if (detector.done == true)
             {
                 completeTask();
+               // rabbit.transform.Rotate(0,30,0);
                 currentAnimator.runtimeAnimatorController = celebrate;
                 candyAnimator.runtimeAnimatorController = candyMove;
                 detector.Stop();
             }
         }
-        //else if (complete && timer == 0)
-        //{
-          //  correct_prompt.SetActive(false);
-        //}
-
-        /* Moves rabbit to next destination if running, if not then idle */
-
-        if (moving == true && timer == 0)
-        {
-            Vector3 rabbitLocation = rabbit.transform.position;
-            Vector3 target = destination1.transform.position;
-            var offset = target - rabbitLocation;
-        
-            if (offset.magnitude > 3f && moving == true) {
-                // If we're further away than 3 units, move towards the target.
-                // The minimum allowable tolerance varies with the speed of the object and the framerate.
-                // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
-                offset = offset.normalized * 5.0f;
-                //normalize it and account for movement speed.
-                rabbit.transform.position = rabbitLocation + (offset * Time.deltaTime);
-                
-            } 
-            else 
-            {
-                moving = false;
-                timer = 17f; // reset timer
-                //rabbit.transform.Rotate(0,350,0);
-                currentAnimator.runtimeAnimatorController = idle;
-            }
-        }
-
         
     }
 
