@@ -93,8 +93,8 @@ public class PeakDetector : MonoBehaviour
     }
 
     private IEnumerator CountPeaks() {
-        //while (true) {
-        while (!done) {
+        while (true) {
+       // while (!done) {
             if(!bInitializePrevLevel){
                 streamingMic.InitializePrevLevel(); 
                 bInitializePrevLevel=true;

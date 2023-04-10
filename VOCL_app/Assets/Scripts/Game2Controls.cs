@@ -51,19 +51,18 @@ public class Game2Controls : MonoBehaviour
         if (timer == 0)
         {
             startUpDone = true;
+            mainPrompt.SetActive(false);
+            homeButton.SetActive(true);
+           // prompt1.SetActive(true);
+            basket.SetActive(true);
+            timer = 2000;
         }
         
         if (!startUpDone)
         {
             timer = timer - 1.0;
         }
-        else
-        {
-            mainPrompt.SetActive(false);
-            homeButton.SetActive(true);
-           // prompt1.SetActive(true);
-            basket.SetActive(true);
-        }
+       
         
        
         //float distFromStart = Vector3.Distance(rabbitLocation, start);
