@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fruit_game.unity
     guid: 655dc773514325d41aec8f76bda416a2
+  - enabled: 1
+    path: Assets/Scenes/Game2.unity
+    guid: fcf837a6824764520bb8d9bc90e7c039
+  - enabled: 1
+    path: Assets/Scenes/Game3.unity
+    guid: 8193f6264b5ed4704be11b5359c159a0
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 36d70e81b493e43888f5f8002f144a2e,
       type: 2}
