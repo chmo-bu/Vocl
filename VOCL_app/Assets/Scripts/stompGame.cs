@@ -84,7 +84,7 @@ public class stompGame : MonoBehaviour
             {
                 moving = false;
                 timer = 17f; // reset timer
-                //rabbit.transform.Rotate(0,350,0);
+               // rabbit.transform.Rotate(0,-3,0);
                 currentAnimator.runtimeAnimatorController = idle;
                 basket.SetActive(true);
             }
@@ -103,7 +103,7 @@ public class stompGame : MonoBehaviour
             if (detector.done == true)
             {
                 completeTask();
-               // rabbit.transform.Rotate(0,30,0);
+               // rabbit.transform.Rotate(0,3,0);
                 currentAnimator.runtimeAnimatorController = celebrate;
                 candyAnimator.runtimeAnimatorController = candyMove;
                 detector.Stop();
