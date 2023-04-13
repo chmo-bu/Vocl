@@ -131,6 +131,9 @@ public class StreamingMic : MonoBehaviour
                         if (_samples.Count == 48000) {
                             detected = false;
                         }
+                    } else {
+                        _samples.Dequeue();
+                        _samples.Enqueue(samples[i]);
                     }
                 }
                 // Debug.Log(_samples._head);
