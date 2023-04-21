@@ -154,7 +154,7 @@ public class PeakDetector : MonoBehaviour
                     // .ToArray()));
 
                     // peak finding procedure:
-                    // NOTE: 0.25 * 3 seconds = 12000 samples b/c sample rate is 16000
+                    // NOTE: 0.25 * 3 seconds = 4000 samples b/c sample rate is 16000
                     // first -> max of array
                     // second -> max to left of (first - 0.25 * 3 seconds)
                     // third -> max to right of (first + 0.25 * 3 seconds)
@@ -164,21 +164,21 @@ public class PeakDetector : MonoBehaviour
                     // seventh -> right to third of (third + 0.25 * 3 seconds)
 
                     m[0] = streamingMic.argmax(filtered);
-                    m[1] = streamingMic.argmax(filtered, 0, Math.Max(0, m[0] - 12000));
-                    m[2] = streamingMic.argmax(filtered, Math.Min(m[0] + 12000, 47999), 48000);
-                    m[3] = streamingMic.argmax(filtered, 0, Math.Max(0, m[1] - 12000));
+                    m[1] = streamingMic.argmax(filtered, 0, Math.Max(0, m[0] - 4000));
+                    m[2] = streamingMic.argmax(filtered, Math.Min(m[0] + 4000, 47999), 48000);
+                    m[3] = streamingMic.argmax(filtered, 0, Math.Max(0, m[1] - 4000));
                     m[4] = -1;
                     m[5] = -1;
 
                     if (m[0] - m[1] < 1) {
-                        m[4] = streamingMic.argmax(filtered,  Math.Min(m[1] + 12000, 47999), Math.Max(0, m[0] - 12000));
+                        m[4] = streamingMic.argmax(filtered,  Math.Min(m[1] + 4000, 47999), Math.Max(0, m[0] - 4000));
                     }
 
                     if (m[2] - m[0] < 1) {
-                        m[5] = streamingMic.argmax(filtered,  Math.Min(m[0] + 12000, 47999), Math.Max(0, m[2] - 12000));
+                        m[5] = streamingMic.argmax(filtered,  Math.Min(m[0] + 4000, 47999), Math.Max(0, m[2] - 4000));
                     }
 
-                    m[6] = streamingMic.argmax(filtered, Math.Min(m[2] + 12000, 47999), 48000);
+                    m[6] = streamingMic.argmax(filtered, Math.Min(m[2] + 4000, 47999), 48000);
 
                     // convert indices to values
                     for (int i=0; i<7; i++) {
