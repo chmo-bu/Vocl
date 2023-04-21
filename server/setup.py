@@ -7,6 +7,10 @@ setup(
     include_package_data=True,
     install_requires=[
         'flask',
-        'matplotlib'
+        'matplotlib',
+        'tensorflow',
+        #'tensorflow_io',
+        'numpy',
+        'pandas'
     ],
 )
