@@ -234,6 +234,8 @@ public class ClapDetector : MonoBehaviour
                     
                     UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052/data", formData);
                     yield return www.SendWebRequest();
+
+                    www.Dispose();
                 }
             }
             yield return new WaitForSeconds(0.02f);
