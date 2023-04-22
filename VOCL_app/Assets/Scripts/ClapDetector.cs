@@ -7,13 +7,15 @@ using static MovingAverage.MovingAverage;
 using UnityEngine;
 using TCPSocket;
 using UnityEngine.Networking;
+using YamNetUnity;
 //using static Game3.completeTask;
 
-// namespace ClapDetector {
+[DisallowMultipleComponent]
+[RequireComponent(typeof(YamNet))]
 public class ClapDetector : MonoBehaviour
 {
     public bool done;
-    // public StreamingMic.StreamingMic streamingMic = new StreamingMic.StreamingMic();
+    // public net.StreamingMic streamingMic = new net.StreamingMic();
     public StreamingMic streamingMic;
     private float waitTime = 1.5f;
     private float timer = 0.0f;
@@ -48,6 +50,7 @@ public class ClapDetector : MonoBehaviour
 
     private TCPClient client;
 
+    private YamNet net;
     // private byte[] byteData = new byte[48000*sizeof(float)];
 
     // Constructor
@@ -59,14 +62,18 @@ public class ClapDetector : MonoBehaviour
 
     void Start()
     {
+        // net.StartMicrophone();
+
         // client = new TCPClient();
         hp = new FilterButterworth(600, 16000, FilterButterworth.PassType.Highpass, resonance);
         lp = new FilterButterworth(3000, 16000, FilterButterworth.PassType.Lowpass, resonance);
     }
 
     public void Listen() {
+        net = GetComponent<YamNet>();
+        net.onResult.AddListener(YamNetResultCallback);
         done = false;
-        streamingMic.StartRecording();
+        net.StartMicrophone();
         lastTime = System.DateTime.Now;
         cid = Runnable.Run(CountPeaks());
     }
@@ -74,7 +81,8 @@ public class ClapDetector : MonoBehaviour
     public void Stop() {
         Runnable.Stop(cid);
         cid = 0;
-        streamingMic.StopRecording();
+        net.StopMicrophone();
+        net.onResult.RemoveListener(YamNetResultCallback);
     }
 
     public bool checkCount(int claps)
@@ -94,7 +102,7 @@ public class ClapDetector : MonoBehaviour
         while (true) {
         // while (!done) {
             if(!bInitializePrevLevel){
-                streamingMic.InitializePrevLevel(); 
+                net.InitializePrevLevel(); 
                 bInitializePrevLevel=true;
                 yield return new WaitForSeconds(0.02f);
             
@@ -102,141 +110,133 @@ public class ClapDetector : MonoBehaviour
 
             timer += Time.deltaTime; 
             if(timer < waitTime) {
-                streamingMic.FillPrevLevel(); 
+                net.FillPrevLevel(); 
                 yield return new WaitForSeconds(0.02f); 
             }   //wait for 1.5 seconds before responding to sound. This will allow the threashold to settle.
             
-            tempState = streamingMic.m_5buff > streamingMic.Threshold(2.0f);
-            // tempState = streamingMic.m_5buff > streamingMic.Threshold(4.0f);
-            // tempState = streamingMic.m_5buff > 0.20;
+            tempState = net.m_5buff > net.Threshold(2.0f);
+            // tempState = net.m_5buff > net.Threshold(4.0f);
+            // tempState = net.m_5buff > 0.20;
 
-            if (tempState && ((double)((TimeSpan)(System.DateTime.Now
-            - lastTime)).TotalMilliseconds) > clapDelay) {
-                lastTime = System.DateTime.Now;
-                int currCount = streamingMic._samples.Count;
-                if (currCount >= half) {
-                    // set detection flag to notify streaming mic
-                    // that we have reached the threshold
-                    streamingMic.detected = true;
+            if (tempState) {
+                // wait 1.5 seconds
+                yield return new WaitForSeconds(1.5f);
 
-                    // wait until 48000 samples
-                    yield return new WaitUntil(() => 
-                        (streamingMic.detected == false));
+                // get sample window
+                filtered = net.getSamples();
 
-                    // get sample window
-                    filtered = streamingMic._samples.ToArray();
-
-                    // clear buffer
-                    streamingMic._samples.Clear();
-
-                    // initialize first two inputs of butterworth filters
-                    hp.filterInit(filtered[0], filtered[1]);
-                    lp.filterInit(filtered[0], filtered[1]);
-
-                    // high pass at 600hz and next low pass at 3000hz
-                    for (int i=2; i<48000; i++) {
-                        filtered[i] = hp.Update(filtered[i]);
-                        filtered[i] = lp.Update(filtered[i]);
-                    }
-
-                    // run a 5-point moving average
-                    filtered = MovingAverage.MovingAverage.run(filtered, 5);
-
-                    // Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
-                    
-                    // client.SendMessage(byteData);
-
-                    // Debug.Log("data = " + String.Join(",",
-                    // new List<float>(filtered)
-                    // .ConvertAll(i => i.ToString())
-                    // .ToArray()));
-
-                    // peak finding procedure:
-                    // NOTE: 0.25 * 3 seconds = 4000 samples b/c sample rate is 16000
-                    // first -> max of array
-                    // second -> max to left of (first - 0.25 * 3 seconds)
-                    // third -> max to right of (first + 0.25 * 3 seconds)
-                    // fourth -> max to left of (second - 0.25 * 3 seconds)
-                    // fifth -> between second and first (second + 0.25 * 3 seconds -> first - 0.25 * 3 seconds)
-                    // sixth -> between first and third (first + 0.25 * 3 seconds -> third - 0.25 * 3 seconds)
-                    // seventh -> right to third of (third + 0.25 * 3 seconds)
-
-                    m[0] = streamingMic.argmax(filtered);
-                    m[1] = streamingMic.argmax(filtered, 0, Math.Max(0, m[0] - 4000));
-                    m[2] = streamingMic.argmax(filtered, Math.Min(m[0] + 4000, 47999), 48000);
-                    m[3] = streamingMic.argmax(filtered, 0, Math.Max(0, m[1] - 4000));
-                    m[4] = -1;
-                    m[5] = -1;
-
-                    if (m[0] - m[1] < 1) {
-                        m[4] = streamingMic.argmax(filtered,  Math.Min(m[1] + 4000, 47999), Math.Max(0, m[0] - 4000));
-                    }
-
-                    if (m[2] - m[0] < 1) {
-                        m[5] = streamingMic.argmax(filtered,  Math.Min(m[0] + 4000, 47999), Math.Max(0, m[2] - 4000));
-                    }
-
-                    m[6] = streamingMic.argmax(filtered, Math.Min(m[2] + 4000, 47999), 48000);
-
-                    // convert indices to values
-                    for (int i=0; i<7; i++) {
-                        int idx = m[i];
-                        if (idx != -1) {
-                            m_amp[i] = filtered[idx];
-                        } else {m_amp[i] = 0;} // if m[4] or m[5] are negative make sure they are at the end when sorted
-                    }
-
-                    // Debug.Log(m_amp[0] + " " + m_amp[1] + " " + m_amp[2] + " " + 
-                    //     m_amp[3] + " " + m_amp[4] + " " + m_amp[5] + " " + m_amp[6]);
-
-                    // Debug.Log(m[0] + " " + m[1] + " " + m[2] + " " + 
-                    //     m[3] + " " + m[4] + " " + m[5] + " " + m[6]); 
-
-                    // copy values
-                    Array.Copy(m_amp, sorted, m_amp.Length);
-
-                    // sort values (largest -> smallest)
-                    qsortr(sorted, 0, sorted.Length-1);
-
-                    int clapCount = 1;
-                    
-                    // peak comparison procedure
-                    for (int i=2; i<6; i++) {
-                        // compute the average of the i largest peaks
-                        float avgMax = 0;
-                        for (int j=0; j<i; j++) {
-                            avgMax += sorted[i];
-                        }
-                        avgMax /= i;
-
-                        // find the smallest amplitude of unsorted peaks
-                        float minAmp = m_amp[0];
-                        for (int j=0; j<i; j++) {
-                            if (m_amp[i] < minAmp) {
-                                minAmp = m_amp[i];
-                            }
-                        }
-
-                        // Debug.Log("minimum: " + minAmp + " threshold: " + 0.7*avgMax);
-
-                        // if the smallest amplitude is greater than 0.7 * average of the i largest peaks increment clap count
-                        if (minAmp > (0.7 * avgMax)) {
-                            clapCount++;
-                        } else {break;}
-                    }
-                    Debug.Log("clap count: " + clapCount);
-                    done = checkCount(clapCount);
-
-                    WWWForm formData = new WWWForm();
-                    formData.AddField("data", String.Join(",", filtered));
-                    formData.AddField("peaks", String.Join(",", m));
-                    formData.AddField("claps", clapCount.ToString());
-                    
-                    UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052/data", formData);
-                    yield return www.SendWebRequest();
-
-                    www.Dispose();
+                while (filtered.Length != 48000) {
+                    yield return new WaitForSeconds(0.02f);
+                    filtered = net.getSamples();
                 }
+
+                // initialize first two inputs of butterworth filters
+                hp.filterInit(filtered[0], filtered[1]);
+                lp.filterInit(filtered[0], filtered[1]);
+
+                // high pass at 600hz and next low pass at 3000hz
+                for (int i=2; i<48000; i++) {
+                    filtered[i] = hp.Update(filtered[i]);
+                    filtered[i] = lp.Update(filtered[i]);
+                }
+
+                // run a 5-point moving average
+                filtered = MovingAverage.MovingAverage.run(filtered, 5);
+
+                // Buffer.BlockCopy(filtered, 0, byteData, 0, byteData.Length);
+                
+                // client.SendMessage(byteData);
+
+                // Debug.Log("data = " + String.Join(",",
+                // new List<float>(filtered)
+                // .ConvertAll(i => i.ToString())
+                // .ToArray()));
+
+                // peak finding procedure:
+                // NOTE: 0.25 * 3 seconds = 4000 samples b/c sample rate is 16000
+                // first -> max of array
+                // second -> max to left of (first - 0.25 * 3 seconds)
+                // third -> max to right of (first + 0.25 * 3 seconds)
+                // fourth -> max to left of (second - 0.25 * 3 seconds)
+                // fifth -> between second and first (second + 0.25 * 3 seconds -> first - 0.25 * 3 seconds)
+                // sixth -> between first and third (first + 0.25 * 3 seconds -> third - 0.25 * 3 seconds)
+                // seventh -> right to third of (third + 0.25 * 3 seconds)
+
+                m[0] = streamingMic.argmax(filtered);
+                m[1] = streamingMic.argmax(filtered, 0, Math.Max(0, m[0] - 4000));
+                m[2] = streamingMic.argmax(filtered, Math.Min(m[0] + 4000, 47999), 48000);
+                m[3] = streamingMic.argmax(filtered, 0, Math.Max(0, m[1] - 4000));
+                m[4] = -1;
+                m[5] = -1;
+
+                if (m[0] - m[1] < 1) {
+                    m[4] = streamingMic.argmax(filtered,  Math.Min(m[1] + 4000, 47999), Math.Max(0, m[0] - 4000));
+                }
+
+                if (m[2] - m[0] < 1) {
+                    m[5] = streamingMic.argmax(filtered,  Math.Min(m[0] + 4000, 47999), Math.Max(0, m[2] - 4000));
+                }
+
+                m[6] = streamingMic.argmax(filtered, Math.Min(m[2] + 4000, 47999), 48000);
+
+                // convert indices to values
+                for (int i=0; i<7; i++) {
+                    int idx = m[i];
+                    if (idx != -1) {
+                        m_amp[i] = filtered[idx];
+                    } else {m_amp[i] = 0;} // if m[4] or m[5] are negative make sure they are at the end when sorted
+                }
+
+                // Debug.Log(m_amp[0] + " " + m_amp[1] + " " + m_amp[2] + " " + 
+                //     m_amp[3] + " " + m_amp[4] + " " + m_amp[5] + " " + m_amp[6]);
+
+                // Debug.Log(m[0] + " " + m[1] + " " + m[2] + " " + 
+                //     m[3] + " " + m[4] + " " + m[5] + " " + m[6]); 
+
+                // copy values
+                Array.Copy(m_amp, sorted, m_amp.Length);
+
+                // sort values (largest -> smallest)
+                qsortr(sorted, 0, sorted.Length-1);
+
+                int clapCount = 1;
+                
+                // peak comparison procedure
+                for (int i=2; i<6; i++) {
+                    // compute the average of the i largest peaks
+                    float avgMax = 0;
+                    for (int j=0; j<i; j++) {
+                        avgMax += sorted[i];
+                    }
+                    avgMax /= i;
+
+                    // find the smallest amplitude of unsorted peaks
+                    float minAmp = m_amp[0];
+                    for (int j=0; j<i; j++) {
+                        if (m_amp[i] < minAmp) {
+                            minAmp = m_amp[i];
+                        }
+                    }
+
+                    // Debug.Log("minimum: " + minAmp + " threshold: " + 0.7*avgMax);
+
+                    // if the smallest amplitude is greater than 0.7 * average of the i largest peaks increment clap count
+                    if (minAmp > (0.7 * avgMax)) {
+                        clapCount++;
+                    } else {break;}
+                }
+                Debug.Log("clap count: " + clapCount);
+                done = checkCount(clapCount);
+
+                WWWForm formData = new WWWForm();
+                formData.AddField("data", String.Join(",", filtered));
+                formData.AddField("peaks", String.Join(",", m));
+                formData.AddField("claps", clapCount.ToString());
+                
+                UnityWebRequest www = UnityWebRequest.Post("http://localhost:8052/data", formData);
+                yield return www.SendWebRequest();
+
+                www.Dispose();
             }
             yield return new WaitForSeconds(0.02f);
         }
@@ -314,6 +314,13 @@ public class ClapDetector : MonoBehaviour
                 stack[++top] = h;
             }
         }
+    }
+
+    private void YamNetResultCallback(int bestClassId, string bestClassName, float bestScore)
+    {
+        float time = Time.time;
+        string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}";
+        Debug.Log(status);
     }
 }
 // }
