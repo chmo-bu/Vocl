@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-namespace Filter{
+namespace ConventionalAudio {
+    public static class DefaultParams {
+        public static readonly float resonance=Mathf.Sqrt(2);
+        public static readonly float frequency=500;//highpass cutoff frequency (Hz)
+        public static readonly int sampleRate=16000;//same as m_nRecordingHZ
+    }
+
     public class FilterButterworth
     {
         /// <summary>
