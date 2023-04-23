@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace MovingAverage {
+namespace ConventionalAudio {
     public static class MovingAverage
     {
         public static float[] run(float[] data, int period) {
