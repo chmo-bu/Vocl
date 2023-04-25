@@ -15,9 +15,9 @@ namespace YamNetUnity
         private const int AudioBufferLengthSec = 3;
 
         public NNModel modelAsset;
-        public UnityEvent<int, string, float> onResult;
+        public UnityEvent<int, string, float, bool> onResult;
 
-        public void SendInput(float[] waveform, int sampleRate)
+        public void SendInput(float[] waveform, int sampleRate, bool condition)
         {
             waveform = featureBuffer.Resample(waveform, sampleRate);
             int offset = 0;
@@ -31,7 +31,7 @@ namespace YamNetUnity
                     {
                         var features = new float[96 * 64];
                         Array.Copy(this.featureBuffer.OutputBuffer, 0, features, 0, 96 * 64);
-                        this.OnPatchReceived(features);
+                        this.OnPatchReceived(features, condition);
                     }
                     finally
                     {
@@ -48,7 +48,7 @@ namespace YamNetUnity
 
         private void Awake()
         {
-            this.onResult = new UnityEvent<int, string, float>();
+            this.onResult = new UnityEvent<int, string, float, bool>();
         }
 
         // Start is called before the first frame update
@@ -85,7 +85,7 @@ namespace YamNetUnity
         {
         }
 
-        private void OnPatchReceived(float[] features)
+        private void OnPatchReceived(float[] features, bool condition)
         {
             if (worker != null)
             {
@@ -115,7 +115,7 @@ namespace YamNetUnity
                         }
                     }
                     string bestClassName = this.classMap[bestClassId];
-                    this.onResult.Invoke(bestClassId, bestClassName, bestScore);
+                    this.onResult.Invoke(bestClassId, bestClassName, bestScore, condition);
                 }
                 finally
                 {
