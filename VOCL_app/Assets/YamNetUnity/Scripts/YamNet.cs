@@ -116,7 +116,7 @@ namespace YamNetUnity
                     }
                     string bestClassName = this.classMap[bestClassId];
                     this.onResult.Invoke(bestClassId, bestClassName, bestScore, condition);
-                }
+                } 
                 finally
                 {
                     inputTensor?.Dispose();
