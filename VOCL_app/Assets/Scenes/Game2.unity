@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1335076332}
-  m_IndirectSpecularColor: {r: 0.4241144, g: 0.28833255, b: 0.39856127, a: 1}
+  m_IndirectSpecularColor: {r: 0.425135, g: 0.28858522, b: 0.3976226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9465,6 +9465,7 @@ GameObject:
   - component: {fileID: 1622737958}
   - component: {fileID: 1622737960}
   - component: {fileID: 1622737959}
+  - component: {fileID: 1622737961}
   m_Layer: 0
   m_Name: Audio Detector
   m_TagString: Untagged
@@ -9500,8 +9501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   done: 0
-  streamingMic: {fileID: 1622737960}
-  numToDetect: 0
 --- !u!114 &1622737960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9521,6 +9520,23 @@ MonoBehaviour:
   m_5buff: 0
   m_threshold: 0
   detected: 0
+--- !u!114 &1622737961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622737957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada4cb6c88bd58d40b0d0e3d26720513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelAsset: {fileID: 5022602860645237092, guid: 01f8dfac0d1332f4c851503c4fbef8b8,
+    type: 3}
+  onResult:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1625544867
 PrefabInstance:
   m_ObjectHideFlags: 0

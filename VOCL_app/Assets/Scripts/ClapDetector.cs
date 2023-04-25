@@ -96,9 +96,6 @@ public class ClapDetector : MonoBehaviour
                 
                 bool result = peakCounter.countPeaks(_samples);
                 net.SendInput(_samples, this.sampleRate, result);
-
-                // Debug.Log("peakCounter: " + result);
-                // done = true;
             }
 
             yield return new WaitForSeconds(0.02f);
@@ -159,5 +156,8 @@ public class ClapDetector : MonoBehaviour
         float time = Time.time;
         string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}, threshold: {result}";
         Debug.Log(status);
+
+        // clap event
+        done = (result == true) && (bestClassId > 55 && bestClassId < 63);
     }
 }

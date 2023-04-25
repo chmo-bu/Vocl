@@ -96,9 +96,6 @@ public class PeakDetector : MonoBehaviour
                 
                 bool result = peakCounter.countPeaks(_samples);
                 net.SendInput(_samples, this.sampleRate, result);
-
-                // Debug.Log("peakCounter: " + result);
-                // done = true;
             }
 
             yield return new WaitForSeconds(0.02f);
@@ -159,5 +156,8 @@ public class PeakDetector : MonoBehaviour
         float time = Time.time;
         string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}, threshold: {result}";
         Debug.Log(status);
+
+        // stomp event
+        done = (result == true) && (bestClassId > 45 && bestClassId < 49);
     }
 }
