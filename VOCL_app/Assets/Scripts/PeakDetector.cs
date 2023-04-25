@@ -74,6 +74,8 @@ public class PeakDetector : MonoBehaviour
         }
 
         while (this.cid != 0 && this.clip != null) {
+            float[] _samples = null;
+
             if(!bInitializePrevLevel){
                 thresh.InitializePrevLevel(); 
                 bInitializePrevLevel=true;
@@ -89,9 +91,14 @@ public class PeakDetector : MonoBehaviour
 
             if (thresh.m_5buff > thresh.threshold(3.0f)) {
                 yield return new WaitForSeconds(1.5f);
-                bool result = peakCounter.countPeaks(samples.ToArray());
-                Debug.Log("peakCounter: " + result);
-                done = true;
+                
+                _samples = samples.ToArray();
+                
+                bool result = peakCounter.countPeaks(_samples);
+                net.SendInput(_samples, this.sampleRate, result);
+
+                // Debug.Log("peakCounter: " + result);
+                // done = true;
             }
 
             yield return new WaitForSeconds(0.02f);
@@ -124,7 +131,6 @@ public class PeakDetector : MonoBehaviour
                     samples.Enqueue(data[i]);
                 }
                 thresh.update(data);
-                net.SendInput(data, this.sampleRate);
             }
         }
     }
@@ -144,15 +150,14 @@ public class PeakDetector : MonoBehaviour
         if (this.cid != 0) {
             this.cid = 0;
         }
+        samples.Clear();
         net.onResult.RemoveListener(YamNetResultCallback);
     }
 
-    private void YamNetResultCallback(int bestClassId, string bestClassName, float bestScore)
+    private void YamNetResultCallback(int bestClassId, string bestClassName, float bestScore, bool result)
     {
         float time = Time.time;
-        string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}";
+        string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}, threshold: {result}";
         Debug.Log(status);
     }
 }
-// }
-
