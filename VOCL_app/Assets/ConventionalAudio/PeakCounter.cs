@@ -17,7 +17,7 @@ namespace ConventionalAudio {
         private int[] m;
         private float[] sorted;
 
-        public PeakCounter(int num_peaks=3, Func<float[], float[]> func=null, int skipInterval=4000) {
+        public PeakCounter(int num_peaks, Func<float[], float[]> func=null, int skipInterval=4000) {
             this.num_peaks = num_peaks;
             this.func = func;
             if (this.func == null) {
