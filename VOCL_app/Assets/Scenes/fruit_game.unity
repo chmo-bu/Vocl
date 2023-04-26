@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 355987664}
-  m_IndirectSpecularColor: {r: 0.18333285, g: 0.22889863, b: 0.30584884, a: 1}
+  m_IndirectSpecularColor: {r: 0.18342227, g: 0.22901356, b: 0.30598065, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6092,6 +6092,7 @@ GameObject:
   - component: {fileID: 563469202}
   - component: {fileID: 563469201}
   - component: {fileID: 563469200}
+  - component: {fileID: 563469203}
   m_Layer: 0
   m_Name: clapDetector
   m_TagString: Untagged
@@ -6112,7 +6113,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   done: 0
-  streamingMic: {fileID: 563469201}
 --- !u!114 &563469201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6147,6 +6147,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563469203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563469199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada4cb6c88bd58d40b0d0e3d26720513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelAsset: {fileID: 5022602860645237092, guid: 01f8dfac0d1332f4c851503c4fbef8b8,
+    type: 3}
+  onResult:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &563760765
 PrefabInstance:
   m_ObjectHideFlags: 0
