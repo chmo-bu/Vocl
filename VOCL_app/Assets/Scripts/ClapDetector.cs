@@ -37,7 +37,7 @@ public class ClapDetector : MonoBehaviour
         int maxFreq;
 
         thresh = new Threshold();
-        peakCounter = new PeakCounter();
+        peakCounter = new PeakCounter(3);
         samples = new Queue<float>();
 
         foreach (var device in Microphone.devices)

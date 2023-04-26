@@ -26,18 +26,19 @@ public class PeakDetector : MonoBehaviour
     private int audioOffset;
     private int cid = 0;
     public bool done = false;
+    public int numToDetect;
 
     void Start()
     {
         
     }
 
-    private void StartMicrophone() {
+    private void StartMicrophone(int num) {
         int minFreq;
         int maxFreq;
 
         thresh = new Threshold();
-        peakCounter = new PeakCounter();
+        peakCounter = new PeakCounter(num);
         samples = new Queue<float>();
 
         foreach (var device in Microphone.devices)
@@ -132,14 +133,16 @@ public class PeakDetector : MonoBehaviour
         }
     }
 
-    public void Listen() {
+    public void Listen(int num) {
+        numToDetect = num;
         net = GetComponent<YamNet>();
         net.onResult.AddListener(YamNetResultCallback);
-        StartMicrophone();
+        StartMicrophone(numToDetect);
         if (this.cid == 0) {
             this.cid = Runnable.Run(CountClaps());
         }
     }
+
 
     public void Stop() {
         StopMicrophone();
