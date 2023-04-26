@@ -95,7 +95,7 @@ public class stompGame : MonoBehaviour
             // begin game
             if (!isListening) {
                 stomp_prompt.SetActive(true);
-                detector.Listen(2);
+                detector.Listen();
                 isListening = true;
             }
             
