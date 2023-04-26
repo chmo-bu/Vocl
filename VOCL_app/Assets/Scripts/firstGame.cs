@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class stompGame : MonoBehaviour
+public class firstGame : MonoBehaviour
 {
     public PeakDetector detector;
     public GameObject rabbit;
@@ -18,7 +18,7 @@ public class stompGame : MonoBehaviour
     public bool complete;
 
     public GameObject mainPrompt;
-    public GameObject stomp_prompt;
+    public GameObject clap_prompt;
     public GameObject correct_prompt;
     public RuntimeAnimatorController celebrate;
     public RuntimeAnimatorController idle;
@@ -94,8 +94,8 @@ public class stompGame : MonoBehaviour
         {
             // begin game
             if (!isListening) {
-                stomp_prompt.SetActive(true);
-                detector.Listen();
+                clap_prompt.SetActive(true);
+                detector.Listen(2);
                 isListening = true;
             }
             
@@ -116,7 +116,7 @@ public class stompGame : MonoBehaviour
     {
         complete = true;
         moving = true;
-        stomp_prompt.SetActive(false);
+        clap_prompt.SetActive(false);
         correct_prompt.SetActive(true);
     }
 }
