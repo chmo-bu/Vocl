@@ -45,20 +45,20 @@ namespace ConventionalAudio {
 
             m[0] = Ops.argmax(filtered);
             m[1] = Ops.argmax(filtered, 0, Math.Max(0, m[0] - this.skipInterval));
-            m[2] = Ops.argmax(filtered, Math.Min(m[0] + this.skipInterval, 47999), 48000);
+            m[2] = Ops.argmax(filtered, Math.Min(m[0] + this.skipInterval, data.Length - 1), data.Length);
             m[3] = Ops.argmax(filtered, 0, Math.Max(0, m[1] - this.skipInterval));
             m[4] = -1;
             m[5] = -1;
 
             if (m[0] - m[1] < 1) {
-                m[4] = Ops.argmax(filtered,  Math.Min(m[1] + this.skipInterval, 47999), Math.Max(0, m[0] - this.skipInterval));
+                m[4] = Ops.argmax(filtered,  Math.Min(m[1] + this.skipInterval, data.Length - 1), Math.Max(0, m[0] - this.skipInterval));
             }
 
             if (m[2] - m[0] < 1) {
-                m[5] = Ops.argmax(filtered,  Math.Min(m[0] + this.skipInterval, 47999), Math.Max(0, m[2] - this.skipInterval));
+                m[5] = Ops.argmax(filtered,  Math.Min(m[0] + this.skipInterval, data.Length - 1), Math.Max(0, m[2] - this.skipInterval));
             }
 
-            m[6] = Ops.argmax(filtered, Math.Min(m[2] + this.skipInterval, 47999), 48000);
+            m[6] = Ops.argmax(filtered, Math.Min(m[2] + this.skipInterval, data.Length - 1), data.Length);
 
             // convert indices to values
             for (int i=0; i<7; i++) {
