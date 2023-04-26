@@ -126,7 +126,7 @@ namespace ConventionalAudio {
             lp.filterInit(filtered[0], filtered[1]);
 
             // high pass at 600hz and next low pass at 3000hz
-            for (int i=2; i<48000; i++) {
+            for (int i=2; i<data.Length; i++) {
                 filtered[i] = hp.Update(filtered[i]);
                 filtered[i] = lp.Update(filtered[i]);
             }
