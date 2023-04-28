@@ -31,14 +31,14 @@ public class PeakDetector : MonoBehaviour
 
     void Start()
     {
-        //thresh = new Threshold();
+        thresh = new Threshold();
     }
 
     private void StartMicrophone(int num) {
         int minFreq;
         int maxFreq;
 
-        thresh = new Threshold();
+       // thresh = new Threshold();
         peakCounter = new PeakCounter(num);
         samples = new Queue<float>();
 
