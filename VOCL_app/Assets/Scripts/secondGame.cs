@@ -101,7 +101,7 @@ public class secondGame : MonoBehaviour
                                 {
                                     if (hitInfo.transform.gameObject.CompareTag("Correct"))
                                     {
-                                        Debug.Log("small");
+                                        //Debug.Log("small");
                                         tapCount++;
                                     }
                                 }

@@ -99,11 +99,30 @@ public class firstGame : MonoBehaviour
                 isListening = true;
             }
             
+
+            /* remove later */
+
+            if (Input.touchCount == 1)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                RaycastHit hitInfo;
+                if (Physics.Raycast(ray, out hitInfo))
+                {
+                    if (hitInfo.transform.gameObject.CompareTag("Correct"))
+                    {
+                        completeTask();
+                        currentAnimator.runtimeAnimatorController = celebrate;
+                        candyAnimator.runtimeAnimatorController = candyMove;
+                        detector.Stop();
+                    }
+                }
+            }
+
+
             // check if task is complete
             if (detector.done == true)
             {
                 completeTask();
-               // rabbit.transform.Rotate(0,3,0);
                 currentAnimator.runtimeAnimatorController = celebrate;
                 candyAnimator.runtimeAnimatorController = candyMove;
                 detector.Stop();
