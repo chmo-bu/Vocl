@@ -158,6 +158,8 @@ public class ClapDetector : MonoBehaviour
         Debug.Log(status);
 
         // clap event
-        done = (result == true) && (bestClassId > 55 && bestClassId < 63);
+        //done = (result == true) && (bestClassId > 55 && bestClassId < 63);
+        done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
+
     }
 }
