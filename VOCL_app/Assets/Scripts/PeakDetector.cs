@@ -27,10 +27,11 @@ public class PeakDetector : MonoBehaviour
     private int cid = 0;
     public bool done = false;
     public int numToDetect;
+    public int classID; // 1 - clap, 2 - yell, 3 - stomp
 
     void Start()
     {
-        
+        //thresh = new Threshold();
     }
 
     private void StartMicrophone(int num) {
@@ -133,8 +134,9 @@ public class PeakDetector : MonoBehaviour
         }
     }
 
-    public void Listen(int num) {
+    public void Listen(int num, int id) {
         numToDetect = num;
+        classID = id;
         net = GetComponent<YamNet>();
         net.onResult.AddListener(YamNetResultCallback);
         StartMicrophone(numToDetect);
@@ -160,10 +162,23 @@ public class PeakDetector : MonoBehaviour
         string status = $"time: {time}, bestClassId: {bestClassId}, score: {bestScore}, bestClassName: {bestClassName}, threshold: {result}";
         Debug.Log(status);
 
-        // stomp event
-        //done = (result == true) && (bestClassId > 45 && bestClassId < 49);
 
         // clap 
-        done = (result == true)  && (bestClassId >= 420 && bestClassId <= 500);
+        if (classID == 1)
+        {
+            done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
+
+        }
+        else if (classID == 2)
+        {
+            // yell
+            done = (result == true)  && (bestClassId >= 6 && bestClassId <=11);
+
+        }
+        else if (classID == 3)
+        {
+            // stomp event
+            done = (result == true) && (bestClassId > 45 && bestClassId < 49);
+        }
     }
 }

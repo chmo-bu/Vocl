@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Flythrough : MonoBehaviour
 {
-    float lookSpeed = 1.0f;
+    //float lookSpeed = 1.0f;
     float moveSpeed = 0.07f;
 
     public GameObject sun;
