@@ -22,6 +22,7 @@ public class thirdGame : MonoBehaviour
     public GameObject shout_prompt;
     public GameObject correct_prompt;
     public GameObject endGame;
+    public GameObject button1, button2, button3;
     public RuntimeAnimatorController celebrate;
     public RuntimeAnimatorController arrived;
 
@@ -90,6 +91,9 @@ public class thirdGame : MonoBehaviour
               
                 currentAnimator.runtimeAnimatorController = arrived;
                 endGame.SetActive(true);
+                button1.SetActive(true);
+                button2.SetActive(true);
+                button3.SetActive(false);
                 basket.SetActive(false);
             }
         }
@@ -103,6 +107,26 @@ public class thirdGame : MonoBehaviour
                 shout_prompt.SetActive(true);
                 detector.Listen(1, 2);
                 isListening = true;
+            }
+
+            /* remove later */
+
+            if (Input.touchCount == 1)
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                RaycastHit hitInfo;
+                if (Physics.Raycast(ray, out hitInfo))
+                {
+                    if (hitInfo.transform.gameObject.CompareTag("Correct"))
+                    {
+                        completeTask();
+                        currentAnimator.runtimeAnimatorController = celebrate;
+                        candyAnimator.runtimeAnimatorController = candyMove;
+                        candyAnimator2.runtimeAnimatorController = candyMove;
+                        candyAnimator3.runtimeAnimatorController = candyMove;
+                        detector.Stop();
+                    }
+                }
             }
             
             // check if task is complete
