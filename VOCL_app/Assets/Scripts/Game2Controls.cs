@@ -41,7 +41,7 @@ public class Game2Controls : MonoBehaviour
         prompt1.SetActive(false);
         basket.SetActive(false);
         startUpDone = false;
-        timer = 2000;
+        timer = 700;
     }
 
     void Update()
@@ -55,7 +55,7 @@ public class Game2Controls : MonoBehaviour
             homeButton.SetActive(true);
            // prompt1.SetActive(true);
             basket.SetActive(true);
-            timer = 2000;
+            timer = 700;
         }
         
         if (!startUpDone)

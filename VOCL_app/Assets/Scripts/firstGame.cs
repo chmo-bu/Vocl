@@ -71,7 +71,7 @@ public class firstGame : MonoBehaviour
             Vector3 target = destination1.transform.position;
             var offset = target - rabbitLocation;
             //Debug.Log(offset.magnitude);
-            if (offset.magnitude > 90f && moving == true) {
+            if (offset.magnitude > 100f && moving == true) {
                 // If we're further away than 3 units, move towards the target.
                 // The minimum allowable tolerance varies with the speed of the object and the framerate.
                 // 2 * tolerance must be >= moveSpeed / framerate or the object will jump right over the stop.
@@ -84,7 +84,7 @@ public class firstGame : MonoBehaviour
             {
                 moving = false;
                 timer = 17f; // reset timer
-               // rabbit.transform.Rotate(0,-3,0);
+              
                 currentAnimator.runtimeAnimatorController = idle;
                 basket.SetActive(true);
             }

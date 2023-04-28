@@ -161,6 +161,9 @@ public class PeakDetector : MonoBehaviour
         Debug.Log(status);
 
         // stomp event
-        done = (result == true) && (bestClassId > 45 && bestClassId < 49);
+        //done = (result == true) && (bestClassId > 45 && bestClassId < 49);
+
+        // clap 
+        done = (result == true)  && (bestClassId >= 420 && bestClassId <= 500);
     }
 }
