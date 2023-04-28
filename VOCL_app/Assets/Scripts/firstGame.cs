@@ -125,6 +125,8 @@ public class firstGame : MonoBehaviour
                 completeTask();
                 currentAnimator.runtimeAnimatorController = celebrate;
                 candyAnimator.runtimeAnimatorController = candyMove;
+                // reset detector 
+                detector.done = false;
                 detector.Stop();
             }
         }
