@@ -95,7 +95,7 @@ public class firstGame : MonoBehaviour
             // begin game
             if (!isListening) {
                 clap_prompt.SetActive(true);
-                detector.Listen(2);
+                detector.Listen(2, 1);
                 isListening = true;
             }
             

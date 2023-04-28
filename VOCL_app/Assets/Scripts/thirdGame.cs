@@ -6,10 +6,12 @@ public class thirdGame : MonoBehaviour
 {
     public PeakDetector detector;
     public GameObject rabbit;
+    public GameObject start;
     public GameObject destination;
     public GameObject candy1, candy2, candy3;
 
     public GameObject basket;
+    public GameObject log;
 
     public Vector3 rabbitLocation;
 
@@ -17,11 +19,11 @@ public class thirdGame : MonoBehaviour
     AudioSource audioSource; 
     public bool complete;
 
-   // public GameObject mainPrompt;
     public GameObject shout_prompt;
     public GameObject correct_prompt;
+    public GameObject endGame;
     public RuntimeAnimatorController celebrate;
-    public RuntimeAnimatorController idle;
+    public RuntimeAnimatorController arrived;
 
     public RuntimeAnimatorController candyMove;
     
@@ -32,6 +34,7 @@ public class thirdGame : MonoBehaviour
 
     void Start()
     {
+        shout_prompt.SetActive(false);
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
@@ -53,11 +56,12 @@ public class thirdGame : MonoBehaviour
     void Update()
     {
         rabbitLocation = rabbit.transform.position;
+        Vector3 target2 = start.transform.position;
         Animator currentAnimator = rabbit.GetComponent<Animator>();
         Animator candyAnimator = candy1.GetComponent<Animator>();
         Animator candyAnimator2 = candy2.GetComponent<Animator>();
         Animator candyAnimator3 = candy3.GetComponent<Animator>();
-
+        var distFromTarget2 = rabbitLocation - target2;
         if (timer != 0f && complete == true && moving)
         {
             timer = timer - .5f;
@@ -84,17 +88,20 @@ public class thirdGame : MonoBehaviour
                 moving = false;
                 timer = 17f; // reset timer
               
-                currentAnimator.runtimeAnimatorController = idle;
-                basket.SetActive(true);
+                currentAnimator.runtimeAnimatorController = arrived;
+                endGame.SetActive(true);
+                basket.SetActive(false);
             }
         }
 
-        if (!complete && !moving)
+        if (distFromTarget2.magnitude < 100f && !complete)
         {
+            // at initial, start 
             // begin game
+            shout_prompt.SetActive(true);
             if (!isListening) {
                 shout_prompt.SetActive(true);
-                detector.Listen(1);
+                detector.Listen(1, 2);
                 isListening = true;
             }
             
@@ -114,6 +121,8 @@ public class thirdGame : MonoBehaviour
 
     public void completeTask()
     {
+       // tree.SetActive(false);
+        log.SetActive(false);
         complete = true;
         moving = true;
         shout_prompt.SetActive(false);
