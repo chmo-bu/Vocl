@@ -18,7 +18,7 @@ A **Unity Application**, and a **Flask Server**. Installation, compilation, usag
 5. If an iPad is unavailable, or you are testing the application on a non-MacOS device, editor simulation is still possible, but building is not. To simulate, drag the `LoadScene` scene into the project hierarchy tab, select `Window->General->Device Simulator` from the toolbar, and press the upper-middle play button.
     - Refer to the arrows in the following image as a guide: [Simulation Setup](unityguide.png)
 6. Navigate to `File-Build Settings`, and select iOS. If it is greyed out, follow instructions [here](https://docs.unity3d.com/Manual/ios-environment-setup.html) to install the iOS build support module. Once successful, build the project.
-7. Open Xcode, select Open a Project, and navigate to the recently created build. Select it and open it. 
+7. Open Xcode, select Open a Project, and navigate to the recently created build folder. Select and open it. 
 
 
 
