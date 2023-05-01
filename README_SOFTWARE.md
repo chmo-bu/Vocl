@@ -55,9 +55,8 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
          - /Scenes: Contains all scenes used in the game, which are `LoadScene`, `fruitGame`, `Game2`, `Game3`.
          - /Polyart: Contains main environment used, and most extraneous environment assets
          - /GamePropsFactory: contains the main rabbit asset, along with its animations
-    - /Packages: Contains all dependcy versions used by Unity in the project
+    - /Packages: Contains all dependency versions used by Unity in the project
     - /ProjectSettings, /UserSettings: Predetermined Unity compiler settings
-3. /server
 
 
 
