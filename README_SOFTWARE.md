@@ -16,7 +16,7 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
 4. In the application's current state, the build target is an Apple iPad. Building the project on an iPad requires a USB / USB-C to lightning connector and Xcode installed on a MacOS machine.
     - Xcode installation instructions may be found [here](https://developer.apple.com/xcode/). 
 5. If an iPad is unavailable, or you are testing the application on a non-MacOS device, editor simulation is still possible, but building is not. To simulate, drag the `LoadScene` scene into the project hierarchy tab, select `Window->General->Device Simulator` from the toolbar, and press the upper-middle play button.
-    - Refer to the arrows in the following image as a guide: [Simulation Setup](unityguide.png)
+    - Refer to the arrows in the following image as a guide: [Simulation Setup](/MDattachments/unityguide.png)
 6. Navigate to `File-Build Settings`, and select iOS. If it is greyed out, follow instructions [here](https://docs.unity3d.com/Manual/ios-environment-setup.html) to install the iOS build support module. Once successful, build the project.
 7. Open Xcode, select Open a Project, and navigate to the recently created build folder. Select and open it. Once loaded into the Xcode environment, follow [these](https://steemit.com/xcode/@ktsteemit/xcode-free-provisioning) instructions to build the app on the target iPad if you don't have an Apple Developer account.
 
@@ -43,6 +43,9 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
 
 ### Server Information
 1. fill in package versions, etc.
+
+## Software Overview
+
 
 
     
