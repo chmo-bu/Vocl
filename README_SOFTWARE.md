@@ -46,7 +46,18 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
 
 ## Software Overview
 1. [Flow Chart](/MDattachments/flowchart.png)
-2. 
+### Unity Components
+1. /VOCL_app
+    - /Assets: Contains all Unity assets used for the project, all scripts, all scenes visible in the project.
+         - Important folders: 
+         - /Scripts: contains all scripts used for each scene and each game. To determine which script is used for which game/scene, load the scene into the hierarchy window, and navigate to the scene folder. Each game will be labeled and in the inspector window the scripts and assets used will appear.
+         - /ConventionalAudio: contains the scripts used for conventional audio processing.
+         - /Scenes: Contains all scenes used in the game, which are `LoadScene`, `fruitGame`, `Game2`, `Game3`.
+         - /Polyart: Contains main environment used, and most extraneous environment assets
+         - /GamePropsFactory: contains the main rabbit asset, along with its animations
+    - /Packages: Contains all dependcy versions used by Unity in the project
+    - /ProjectSettings, /UserSettings: Predetermined Unity compiler settings
+3. /server
 
 
 
