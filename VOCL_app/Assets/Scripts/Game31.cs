@@ -97,6 +97,7 @@ public class Game31 : MonoBehaviour
                         {
                             //Debug.Log("pink");
                             completeTask();
+                            rabbit.transform.Rotate(0,90,0);
                             currentAnimator.runtimeAnimatorController = celebrate;
 
                         }
