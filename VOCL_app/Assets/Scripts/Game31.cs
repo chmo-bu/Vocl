@@ -7,6 +7,8 @@ public class Game31 : MonoBehaviour
     public GameObject rabbit;
     public GameObject destination1;
     public GameObject correct_prompt;
+    public GameObject incorrect_prompt;
+
     public GameObject pink_candy;
     public GameObject green_candy;
     public GameObject blue_candy;
@@ -18,14 +20,15 @@ public class Game31 : MonoBehaviour
     public GameObject tap_prompt;
     public float timer;
 
-     void Start()
+    void Start()
     {
         rabbitLocation = rabbit.transform.position;
         complete = false;
         moving = false;
         correct_prompt.SetActive(false);
+        incorrect_prompt.SetActive(false);
         tap_prompt.SetActive(false);
-        timer = 500.0f;
+        timer = 1000.0f;
     }
 
     void Update()
@@ -41,12 +44,12 @@ public class Game31 : MonoBehaviour
 
         if(timer == 0f)
         {
-            completeTask();
-            currentAnimator.runtimeAnimatorController = celebrate;
+            incorrect_prompt.SetActive(false);
+            timer = 1000.0f;
 
         }
 
-
+        //moving to next destination, Game2
         if (moving == true)
         {
             Vector3 rabbitLocation = rabbit.transform.position;
@@ -61,7 +64,16 @@ public class Game31 : MonoBehaviour
                 //normalize it and account for movement speed.
                 rabbit.transform.position = rabbitLocation + (offset * Time.deltaTime);
                 
-            } 
+            }
+            else 
+                {
+                    moving = false;
+                    //timer = 17f; // reset timer
+                    // rabbit.transform.Rotate(0,-3,0);
+                    currentAnimator.runtimeAnimatorController = idle;
+                    //basket.SetActive(true);
+                }
+            
         }
 
         if (!complete)
@@ -76,16 +88,23 @@ public class Game31 : MonoBehaviour
                 if (Input.touchCount == 1)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                    //Debug.Log(ray);
                     RaycastHit hitInfo;
                     if (Physics.Raycast(ray, out hitInfo))
                     {
-                    Debug.Log(ray);
+                    //Debug.Log(ray);
 
                         if (hitInfo.transform.gameObject.CompareTag("Correct"))
                         {
-                            Debug.Log("pink");
+                            //Debug.Log("pink");
                             completeTask();
+                            currentAnimator.runtimeAnimatorController = celebrate;
+
+                        }
+
+                        if (hitInfo.transform.gameObject.CompareTag("Incorrect"))
+                        {
+                            incorrect_prompt.SetActive(true);
+
                         }
                     }
                                                 
@@ -101,5 +120,7 @@ public class Game31 : MonoBehaviour
         moving = true;
         tap_prompt.SetActive(false);
         correct_prompt.SetActive(true);
+        incorrect_prompt.SetActive(false);
+
     }
 }
