@@ -489,6 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingObject: {fileID: 2158751542132751495}
   prompt: {fileID: 1546923031}
+  detector: {fileID: 0}
 --- !u!1 &1546923031 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2711622084145608892, guid: f8b5c13167a6b490e8bacfab84810309,

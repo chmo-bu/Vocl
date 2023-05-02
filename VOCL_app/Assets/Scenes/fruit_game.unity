@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.63529414, g: 0.81951725, b: 1, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.001
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 355987664}
-  m_IndirectSpecularColor: {r: 0.18342227, g: 0.22901356, b: 0.30598065, a: 1}
+  m_IndirectSpecularColor: {r: 0.18342194, g: 0.22901322, b: 0.30598, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5395,6 +5395,7 @@ MonoBehaviour:
   loadingObject: {fileID: 2429025853544463335, guid: cbd104cfb9d21416d9efb4193c6054a0,
     type: 3}
   prompt: {fileID: 7820084125961918018, guid: c2ae594c7727aca428f01d53c0620018, type: 3}
+  detector: {fileID: 0}
 --- !u!1001 &441008183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6125,13 +6126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df4773fb37bf8040a8462482f2fba05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_nRecordingHZ: 16000
-  m_level: 0
-  rmsLevel: 0
-  rmsLevelUnfilt: 0
-  m_5buff: 0
-  m_threshold: 0
-  detected: 0
 --- !u!4 &563469202
 Transform:
   m_ObjectHideFlags: 0
@@ -21761,8 +21755,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000000
-  field of view: 90
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -21787,8 +21781,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2244133390816437729}
-  m_LocalRotation: {x: 0.070951976, y: 0.14306971, z: 0.015982788, w: 0.9870367}
-  m_LocalPosition: {x: -115.109985, y: -15.070007, z: -47.109985}
+  m_LocalRotation: {x: 0.010357756, y: 0.8290827, z: 0.01536712, w: -0.5588188}
+  m_LocalPosition: {x: -5642.3057, y: 1910.3607, z: -2681.9587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
