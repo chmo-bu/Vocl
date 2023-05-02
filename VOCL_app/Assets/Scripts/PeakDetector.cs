@@ -27,6 +27,7 @@ public class PeakDetector : MonoBehaviour
     private int cid = 0;
     public bool done = false;
     public int numToDetect;
+    public bool isListening = false;
     public int classID; // 1 - clap, 2 - yell, 3 - stomp
 
     void Start()
@@ -135,6 +136,7 @@ public class PeakDetector : MonoBehaviour
     }
 
     public void Listen(int num, int id) {
+        isListening = true;
         numToDetect = num;
         classID = id;
         net = GetComponent<YamNet>();
@@ -147,6 +149,7 @@ public class PeakDetector : MonoBehaviour
 
 
     public void Stop() {
+        isListening = false;
         StopMicrophone();
         Runnable.Stop(this.cid);
         if (this.cid != 0) {
