@@ -8,17 +8,17 @@ public class ChangeScene : MonoBehaviour
 {
     public GameObject loadingObject;
     public GameObject prompt;
-   // public GameObject menu;
+    public PeakDetector detector;
 
     
     public void LoadScene(int sceneID)
     {
-        //SceneManager.LoadScene(sceneID);
-        //StartCoroutine(LoadSceneAsync(sceneID));
-       // menu.SetActive(false);
-       // StartCoroutine(LoadScene(sceneID));
        prompt.SetActive(false);
        StartCoroutine(LoadSceneAsync(sceneID));
+       if (detector.isListening)
+       {
+        detector.Stop();
+       }
     }
 
     IEnumerator LoadSceneAsync(int sceneID)

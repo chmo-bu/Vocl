@@ -8475,6 +8475,7 @@ MonoBehaviour:
   loadingObject: {fileID: 2429025853544463335, guid: cbd104cfb9d21416d9efb4193c6054a0,
     type: 3}
   prompt: {fileID: 7820084125961918018, guid: c2ae594c7727aca428f01d53c0620018, type: 3}
+  detector: {fileID: 1622737959}
 --- !u!1001 &1283146902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10721,6 +10722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   done: 0
   numToDetect: 0
+  isListening: 0
   classID: 0
 --- !u!114 &1622737961
 MonoBehaviour:
