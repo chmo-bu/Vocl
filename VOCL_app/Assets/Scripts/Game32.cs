@@ -10,7 +10,8 @@ public class Game32 : MonoBehaviour
     public GameObject next_destination;
     public GameObject correct_prompt;
     public GameObject clap_prompt;
-    
+    public PeakDetector detector;
+
     public string microphone;
     AudioSource audioSource; 
     public float timer;
@@ -89,23 +90,31 @@ public class Game32 : MonoBehaviour
                 if (!isListening) 
                 {
                     clap_prompt.SetActive(true);
-                  //  detector.Listen(1, 1);
+                    detector.Listen(1, 1);
                     isListening = true;
                 }
-                /*
-
+                
                 if (detector.done == true)
                 {
-                    //completeTask();
+                    completeTask();
                     currentAnimator.runtimeAnimatorController = celebrate;
                     // reset detector 
                     detector.done = false;
                     detector.Stop();
-                }*/
+                }
             
                                                 
             }
         }
+    }
+
+    public void completeTask()
+    {
+        complete = true;
+        moving = true;
+        clap_prompt.SetActive(false);
+        correct_prompt.SetActive(true);
+
     }
 
 }
