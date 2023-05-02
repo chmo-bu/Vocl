@@ -42,6 +42,8 @@ public class Game31 : MonoBehaviour
         if(timer == 0f)
         {
             completeTask();
+            currentAnimator.runtimeAnimatorController = celebrate;
+
         }
 
 
