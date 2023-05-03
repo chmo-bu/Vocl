@@ -30,7 +30,7 @@ public class secondGame : MonoBehaviour
     {
         rabbitLocation = rabbit.transform.position;
         complete = false;
-        timer = 20f;
+        timer = 3f;
         moving = false;
         correct_prompt.SetActive(false);
         tap_prompt.SetActive(false);
@@ -50,11 +50,11 @@ public class secondGame : MonoBehaviour
 
         if (timer != 0f && complete == true && moving)
         {
-            timer = timer - .5f;
+            timer = timer - Time.deltaTime;
         }
 
         /* Move to next dest. */
-        if (moving == true && timer == 0)
+        if (moving == true && timer < 0)
         {
             //basket.SetActive(false);
             Vector3 rabbitLocation = rabbit.transform.position;
@@ -73,7 +73,7 @@ public class secondGame : MonoBehaviour
             else 
             {
                 moving = false;
-                timer = 17f; // reset timer
+                timer = 3f; // reset timer
                // rabbit.transform.Rotate(0,-3,0);
                 currentAnimator.runtimeAnimatorController = idle;
                 //basket.SetActive(true);

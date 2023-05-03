@@ -30,7 +30,7 @@ public class Game31 : MonoBehaviour
         correct_prompt.SetActive(false);
         incorrect_prompt.SetActive(false);
         tap_prompt.SetActive(false);
-        timer = 1000.0f;
+        timer = 3.0f;
     }
 
     void Update()
@@ -38,28 +38,31 @@ public class Game31 : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         Animator currentAnimator = rabbit.GetComponent<Animator>();
 
-        if (timer != 0f && incorrect_prompt.activeSelf)
+        if (timer >= 0f && incorrect_prompt.activeSelf)
         {
-            timer = timer - .5f;
+            timer = timer - Time.deltaTime;
+            Debug.Log(timer);
         }
 
-        if(timer == 0f && incorrect_prompt.activeSelf)
+        if(timer < 0f && incorrect_prompt.activeSelf)
         {
             incorrect_prompt.SetActive(false);
-            timer = 1000.0f;
+            timer = 3.0f;
         }
 
-        if (timer != 0f && correct_prompt.activeSelf)
+        if (timer >= 0f && correct_prompt.activeSelf)
         {
-            timer = timer - .5f;
+            timer = timer - Time.deltaTime;
+            Debug.Log(timer);
+
         }
 
-        if(timer == 0f && correct_prompt.activeSelf && !stopFlag)
+        if(timer < 0f && correct_prompt.activeSelf && !stopFlag)
         {
             stopFlag = true;
             moving = true;
             rabbit.transform.Rotate(0,90,0);
-            timer = 5000.0f;
+            timer = 0.5f;
         }
         
 
@@ -131,7 +134,7 @@ public class Game31 : MonoBehaviour
     public void completeTask()
     {
         complete = true;
-        timer = 280.0f;
+        timer = 1.0f;
 
         tap_prompt.SetActive(false);
         correct_prompt.SetActive(true);

@@ -39,7 +39,7 @@ public class thirdGame : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
-        timer = 20f;
+        timer = 3f;
         moving = false;
         isListening = false;
         correct_prompt.SetActive(false);
@@ -65,12 +65,12 @@ public class thirdGame : MonoBehaviour
         var distFromTarget2 = rabbitLocation - target2;
         if (timer != 0f && complete == true && moving)
         {
-            timer = timer - .5f;
+            timer = timer - Time.deltaTime;
         }
 
         /* Moves rabbit to next destination if running, if not then idle */
 
-        if (moving == true && timer == 0)
+        if (moving == true && timer < 0)
         {
             Vector3 rabbitLocation = rabbit.transform.position;
             Vector3 target = destination.transform.position;
@@ -87,7 +87,7 @@ public class thirdGame : MonoBehaviour
             else 
             {
                 moving = false;
-                timer = 17f; // reset timer
+                timer = 3f; // reset timer
               
                 currentAnimator.runtimeAnimatorController = arrived;
                 endGame.SetActive(true);
