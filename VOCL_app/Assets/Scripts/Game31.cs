@@ -19,12 +19,14 @@ public class Game31 : MonoBehaviour
     public bool moving;
     public GameObject tap_prompt;
     public float timer;
+    public bool stopFlag;
 
     void Start()
     {
         rabbitLocation = rabbit.transform.position;
         complete = false;
         moving = false;
+        stopFlag = false;
         correct_prompt.SetActive(false);
         incorrect_prompt.SetActive(false);
         tap_prompt.SetActive(false);
@@ -36,18 +38,30 @@ public class Game31 : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         Animator currentAnimator = rabbit.GetComponent<Animator>();
 
-        /* Moves rabbit to next destination if running, if not then idle */
-        if (timer != 0f )
+        if (timer != 0f && incorrect_prompt.activeSelf)
         {
             timer = timer - .5f;
         }
 
-        if(timer == 0f)
+        if(timer == 0f && incorrect_prompt.activeSelf)
         {
             incorrect_prompt.SetActive(false);
             timer = 1000.0f;
-
         }
+
+        if (timer != 0f && correct_prompt.activeSelf)
+        {
+            timer = timer - .5f;
+        }
+
+        if(timer == 0f && correct_prompt.activeSelf && !stopFlag)
+        {
+            stopFlag = true;
+            moving = true;
+            rabbit.transform.Rotate(0,90,0);
+            timer = 5000.0f;
+        }
+        
 
         //moving to next destination, Game2
         if (moving == true)
@@ -97,7 +111,6 @@ public class Game31 : MonoBehaviour
                         {
                             //Debug.Log("pink");
                             completeTask();
-                            rabbit.transform.Rotate(0,90,0);
                             currentAnimator.runtimeAnimatorController = celebrate;
 
                         }
@@ -108,7 +121,7 @@ public class Game31 : MonoBehaviour
 
                         }
                     }
-                                                
+                                             
                 }
             }
         }
@@ -118,7 +131,8 @@ public class Game31 : MonoBehaviour
     public void completeTask()
     {
         complete = true;
-        moving = true;
+        timer = 280.0f;
+
         tap_prompt.SetActive(false);
         correct_prompt.SetActive(true);
         incorrect_prompt.SetActive(false);
