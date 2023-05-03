@@ -15,10 +15,11 @@ public class ChangeScene : MonoBehaviour
     {
        prompt.SetActive(false);
        StartCoroutine(LoadSceneAsync(sceneID));
-       if (detector.isListening)
-       {
-        detector.Stop();
-       }
+       
+    //    if (detector && detector.isListening)
+    //    {
+    //     detector.Stop();
+    //    }
     }
 
     IEnumerator LoadSceneAsync(int sceneID)

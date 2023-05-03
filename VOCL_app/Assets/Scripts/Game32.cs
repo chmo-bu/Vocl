@@ -5,12 +5,13 @@ using System;
 
 public class Game32 : MonoBehaviour
 {
+    public PeakDetector detector;
+
     public GameObject rabbit;
     public GameObject start;
     public GameObject next_destination;
     public GameObject correct_prompt;
     public GameObject clap_prompt;
-    public PeakDetector detector;
 
     public string microphone;
     AudioSource audioSource; 
@@ -102,8 +103,26 @@ public class Game32 : MonoBehaviour
                     detector.done = false;
                     detector.Stop();
                 }
-            
-                                                
+
+                //if audio processing doesn't work we can skip it by touching the lower banana
+                if (Input.touchCount == 1)
+                {
+                    var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                    RaycastHit hitInfo;
+                    if (Physics.Raycast(ray, out hitInfo))
+                    {
+                    //Debug.Log(ray);
+
+                        if (hitInfo.transform.gameObject.CompareTag("Correct"))
+                        {
+                            //Debug.Log("pink");
+                            completeTask();
+                            detector.Stop();
+                            currentAnimator.runtimeAnimatorController = celebrate;
+
+                        }
+                    }                          
+                }
             }
         }
     }
