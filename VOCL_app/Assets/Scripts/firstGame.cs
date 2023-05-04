@@ -35,7 +35,7 @@ public class firstGame : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
-        timer = 5f;
+        timer = 1.4f;
         moving = false;
         isListening = false;
         correct_prompt.SetActive(false);
@@ -57,14 +57,14 @@ public class firstGame : MonoBehaviour
         Animator candyAnimator = lollipop.GetComponent<Animator>();
 
 
-        if (timer > 0f && complete == true && moving)
+        if (timer > 0f && complete && moving)
         {
             timer = timer - Time.deltaTime;
         }
 
         /* Moves rabbit to next destination if running, if not then idle */
 
-        if (moving == true && timer < 0)
+        if (moving == true && timer < 0f)
         {
             //basket.SetActive(false);
             Vector3 rabbitLocation = rabbit.transform.position;
@@ -83,7 +83,7 @@ public class firstGame : MonoBehaviour
             else 
             {
                 moving = false;
-                timer = 5f; // reset timer
+                timer = 1.4f; // reset timer
               
                 currentAnimator.runtimeAnimatorController = idle;
                 basket.SetActive(true);

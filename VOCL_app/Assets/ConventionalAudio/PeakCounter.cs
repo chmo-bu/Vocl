@@ -1,5 +1,9 @@
 using System;
 using ArrayOps;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using UnityEngine;
 
 namespace ConventionalAudio {
     public class PeakCounter {
@@ -101,6 +105,7 @@ namespace ConventionalAudio {
                 } else {break;}
             }
 
+            Debug.Log(clapCount);
             bool detected = (clapCount == this.num_peaks);
 
             return detected;
