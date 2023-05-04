@@ -89,14 +89,14 @@ public class ClapDetector : MonoBehaviour
                 yield return new WaitForSeconds(0.02f); 
             }
 
-            if (thresh.m_5buff > thresh.threshold(3.0f)) {
-                yield return new WaitForSeconds(1.5f);
-                
-                _samples = samples.ToArray();
-                
-                bool result = peakCounter.countPeaks(_samples);
-                net.SendInput(_samples, this.sampleRate, result);
-            }
+            //if (thresh.m_5buff > thresh.threshold(3.0f)) {
+            yield return new WaitForSeconds(1.5f);
+            
+            _samples = samples.ToArray();
+            
+            bool result = peakCounter.countPeaks(_samples);
+            net.SendInput(_samples, this.sampleRate, result);
+            //}
 
             yield return new WaitForSeconds(0.02f);
         }
@@ -136,6 +136,7 @@ public class ClapDetector : MonoBehaviour
         net = GetComponent<YamNet>();
         net.onResult.AddListener(YamNetResultCallback);
         StartMicrophone();
+        done = false;
         if (this.cid == 0) {
             this.cid = Runnable.Run(CountClaps());
         }
@@ -144,6 +145,7 @@ public class ClapDetector : MonoBehaviour
     public void Stop() {
         StopMicrophone();
         Runnable.Stop(this.cid);
+        done = false;
         if (this.cid != 0) {
             this.cid = 0;
         }
@@ -159,7 +161,8 @@ public class ClapDetector : MonoBehaviour
 
         // clap event
         //done = (result == true) && (bestClassId > 55 && bestClassId < 63);
-        done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
+        //done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
+        done |= (result == true) && (bestClassId > 55 && bestClassId < 500);
 
     }
 }

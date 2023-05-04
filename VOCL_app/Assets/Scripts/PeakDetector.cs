@@ -92,14 +92,14 @@ public class PeakDetector : MonoBehaviour
                 yield return new WaitForSeconds(0.02f); 
             }
 
-            if (thresh.m_5buff > thresh.threshold(3.0f)) {
-                yield return new WaitForSeconds(1.5f);
-                
-                _samples = samples.ToArray();
-                
-                bool result = peakCounter.countPeaks(_samples);
-                net.SendInput(_samples, this.sampleRate, result);
-            }
+            //if (thresh.m_5buff > thresh.threshold(3.0f)) {
+            yield return new WaitForSeconds(1.5f);
+            
+            _samples = samples.ToArray();
+            
+            bool result = peakCounter.countPeaks(_samples);
+            net.SendInput(_samples, this.sampleRate, result);
+            //}
 
             yield return new WaitForSeconds(0.02f);
         }
@@ -141,6 +141,7 @@ public class PeakDetector : MonoBehaviour
         classID = id;
         net = GetComponent<YamNet>();
         net.onResult.AddListener(YamNetResultCallback);
+        done = false;
         StartMicrophone(numToDetect);
         if (this.cid == 0) {
             this.cid = Runnable.Run(CountClaps());
@@ -151,6 +152,7 @@ public class PeakDetector : MonoBehaviour
     public void Stop() {
         isListening = false;
         StopMicrophone();
+        done = false;
         Runnable.Stop(this.cid);
         if (this.cid != 0) {
             this.cid = 0;
@@ -169,19 +171,20 @@ public class PeakDetector : MonoBehaviour
         // clap 
         if (classID == 1)
         {
-            done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
-
+            //done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
+            done |= (result == true) && (bestClassId > 55) && (bestClassId < 500);
         }
         else if (classID == 2)
         {
             // yell
-            done = (result == true)  && (bestClassId >= 6 && bestClassId <=11);
+            //done = (result == true)  && (bestClassId >= 6 && bestClassId <=11);
+            done |= (result == true) && (bestClassId < 40) && (bestClassId > 0);
 
         }
-        else if (classID == 3)
-        {
-            // stomp event
-            done = (result == true) && (bestClassId > 45 && bestClassId < 49);
-        }
+        // else if (classID == 3)
+        // {
+        //     // stomp event
+        //     done = (result == true) && (bestClassId > 45 && bestClassId < 49);
+        // }
     }
 }
