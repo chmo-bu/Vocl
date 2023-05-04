@@ -60,6 +60,8 @@ public class firstGame : MonoBehaviour
         if (timer > 0f && complete && moving)
         {
             timer = timer - Time.deltaTime;
+            Debug.Log(timer);
+
         }
 
         /* Moves rabbit to next destination if running, if not then idle */
