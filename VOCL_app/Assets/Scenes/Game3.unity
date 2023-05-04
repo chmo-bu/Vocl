@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1078121403}
-  m_IndirectSpecularColor: {r: 0.5792996, g: 0.7184467, b: 0.6359892, a: 1}
+  m_IndirectSpecularColor: {r: 0.5760884, g: 0.71658593, b: 0.63533163, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3274,9 +3274,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 870946271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a6e8c34e62a84aae8c3e00d4698d63d, type: 3}
+  m_Script: {fileID: 11500000, guid: 736461adae0a24f64a4a1e1547e5003d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rabbit: {fileID: 45392884}
+  start: {fileID: 408501675}
+  gameover_prompt: {fileID: 1131746380}
+  moving: 0
+  rabbitLocation: {x: 0, y: 0, z: 0}
+  yes_button: {fileID: 366439251}
+  no_button: {fileID: 754562221}
 --- !u!4 &909394131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1886321769886696724, guid: 3c388ec77cde744a1953fe53e15ca2ce,
