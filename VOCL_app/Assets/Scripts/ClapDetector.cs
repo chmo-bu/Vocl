@@ -96,6 +96,8 @@ public class ClapDetector : MonoBehaviour
                 
                 bool result = peakCounter.countPeaks(_samples);
                 net.SendInput(_samples, this.sampleRate, result);
+
+                StartCoroutine(PostData(_samples, new int[] {1,2,3,4,5,6,7}, 3));
             }
 
             yield return new WaitForSeconds(0.02f);
@@ -161,5 +163,32 @@ public class ClapDetector : MonoBehaviour
         //done = (result == true) && (bestClassId > 55 && bestClassId < 63);
         done = (result == true)  && ((bestClassId >= 420 && bestClassId <= 432) || bestClassId == 57 || bestClassId == 58);
 
+    }
+
+    private IEnumerator PostData(float[] data, int[] peaks, int clapCount) {
+        string url = "https://alaric42.pythonanywhere.com/data";
+
+        WWWForm formData = new WWWForm();
+        formData.AddField("data", String.Join(",", data));
+        formData.AddField("peaks", String.Join(",", peaks));
+        formData.AddField("claps", clapCount.ToString());
+        
+        UnityWebRequest www = UnityWebRequest.Post(url, formData);
+
+        www.downloadHandler = new DownloadHandlerBuffer(); // get response handler
+
+        yield return www.SendWebRequest(); // wait until request completed
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            string responseText = www.downloadHandler.text; // get response
+            Debug.Log("response: " + responseText);
+        }
+
+        www.Dispose(); // destroy request
     }
 }
