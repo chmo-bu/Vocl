@@ -39,7 +39,7 @@ public class thirdGame : MonoBehaviour
         rabbitLocation = rabbit.transform.position;
         audioSource = GetComponent<AudioSource>();
         complete = false;
-        timer = 3f;
+        timer = 1.4f;
         moving = false;
         isListening = false;
         correct_prompt.SetActive(false);
@@ -87,7 +87,7 @@ public class thirdGame : MonoBehaviour
             else 
             {
                 moving = false;
-                timer = 3f; // reset timer
+                timer = 1.4f; // reset timer
               
                 currentAnimator.runtimeAnimatorController = arrived;
                 endGame.SetActive(true);

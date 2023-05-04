@@ -30,7 +30,7 @@ public class secondGame : MonoBehaviour
     {
         rabbitLocation = rabbit.transform.position;
         complete = false;
-        timer = 3f;
+        timer = 1.4f;
         moving = false;
         correct_prompt.SetActive(false);
         tap_prompt.SetActive(false);
@@ -73,7 +73,7 @@ public class secondGame : MonoBehaviour
             else 
             {
                 moving = false;
-                timer = 3f; // reset timer
+                timer = 1.4f; // reset timer
                // rabbit.transform.Rotate(0,-3,0);
                 currentAnimator.runtimeAnimatorController = idle;
                 //basket.SetActive(true);

@@ -14,7 +14,7 @@ public class Main : MonoBehaviour
    // public GameObject button;
     //public GameObject play_button
    
-    private float timeLeft = 1.0f;
+    private float timeLeft = 3.0f;
 
     private bool switchDone = false;
 
