@@ -106,7 +106,7 @@ namespace ConventionalAudio {
             }
 
             Debug.Log(clapCount);
-            bool detected = (clapCount == this.num_peaks);
+            bool detected = (clapCount >= this.num_peaks);
 
             return detected;
         }
