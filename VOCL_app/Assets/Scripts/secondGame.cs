@@ -87,21 +87,25 @@ public class secondGame : MonoBehaviour
             tap_prompt.SetActive(true);
             if (!complete && !moving)
             {
-                   // Debug.Log(Input.touchCount);
+                   //Debug.Log(Input.touchCount);
                     // begin game
                     if (Input.touchCount == 1 && tapCount != 3)
                     {
                         Touch touch = Input.GetTouch(0);
+                        var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                        RaycastHit hitInfo;
+                       // Debug.Log("here1");
                         switch (touch.phase)
                         {
                             case TouchPhase.Began:
-                                var ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                                RaycastHit hitInfo;
+                                //Debug.Log("here2");
+                                
                                 if (Physics.Raycast(ray, out hitInfo))
                                 {
-                                    if (hitInfo.transform.gameObject.CompareTag("Correct"))
+                                   // Debug.Log(tapCount);
+                                    if (hitInfo.transform.gameObject.CompareTag("Small"))
                                     {
-                                        //Debug.Log("small");
+                                        Debug.Log("small");
                                         tapCount++;
                                     }
                                 }

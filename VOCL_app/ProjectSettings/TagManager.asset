@@ -7,6 +7,7 @@ TagManager:
   - Correct
   - Incorrect
   - Head
+  - Small
   layers:
   - Default
   - TransparentFX
