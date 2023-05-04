@@ -41,26 +41,26 @@ public class Game2Controls : MonoBehaviour
         prompt1.SetActive(false);
         basket.SetActive(false);
         startUpDone = false;
-        timer = 450;
+        timer = 3.0f;
     }
 
     void Update()
     {
         //rabbitLocation = rabbit.transform.position;
         //Animator currentAnimator = rabbit.GetComponent<Animator>();
-        if (timer == 0)
+        if (timer < 0)
         {
             startUpDone = true;
             mainPrompt.SetActive(false);
             homeButton.SetActive(true);
            // prompt1.SetActive(true);
             basket.SetActive(true);
-            timer = 450;
+            timer = 3.0f;
         }
         
         if (!startUpDone)
         {
-            timer = timer - 1.0;
+            timer = timer - Time.deltaTime;
         }
        
         
