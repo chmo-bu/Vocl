@@ -1,8 +1,8 @@
 # Software Report
 
-There are two major software components to this project: 
+There is one major software component in this project: 
 
-A **Unity Application**, and a **Server**. Installation, compilation, usage instruction, and software description follow.
+A **Unity Application**. Installation, compilation, usage instruction, and software description follow.
 
 ## Unity Application Setup Instructions
 
@@ -20,10 +20,6 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
 6. Navigate to `File-Build Settings`, and select iOS. If it is greyed out, follow instructions [here](https://docs.unity3d.com/Manual/ios-environment-setup.html) to install the iOS build support module. Once successful, build the project.
 7. Open Xcode, select Open a Project, and navigate to the recently created build folder. Select and open it. Once loaded into the Xcode environment, follow [these](https://steemit.com/xcode/@ktsteemit/xcode-free-provisioning) instructions to build the app on the target iPad if you don't have an Apple Developer account.
 
-## Server Setup Instructions
-
-1. Once completed, please fill this in, Will.
-
 ## Dev-Build Tool Information
 
 ### Unity information
@@ -40,9 +36,9 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
     - [Fruit Pack](https://assetstore.unity.com/packages/3d/props/food/fruit-pack-80254) version 1.1
     - [Fantasy Skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-18216) version 1.6.0
 3. Xcode Version 14.2 
+4. Yamnet
+    -fill in yamnet version info.
 
-### Server Information
-1. fill in package versions, etc.
 
 ## Software Overview
 1. [Flow Chart](/MDattachments/flowchart.png)
@@ -53,8 +49,9 @@ A **Unity Application**, and a **Server**. Installation, compilation, usage inst
          - /Scripts: contains all scripts used for each scene and each game. To determine which script is used for which game/scene, load the scene into the hierarchy window, and navigate to the scene folder. Each game will be labeled and in the inspector window the scripts and assets used will appear.
          - /ConventionalAudio: contains the scripts used for conventional audio processing.
          - /Scenes: Contains all scenes used in the game, which are `LoadScene`, `fruitGame`, `Game2`, `Game3`.
-         - /Polyart: Contains main environment used, and most extraneous environment assets
-         - /GamePropsFactory: contains the main rabbit asset, along with its animations
+         - /Polyart: Contains main environment used, and most extraneous environment assets.
+         - /GamePropsFactory: contains the main rabbit asset, along with its animations.
+         - /YamNetUnity: contains the scripts required to run the yamnet classifier, the model itself imported as a Unity GameObject, and the possible classification results.
     - /Packages: Contains all dependency versions used by Unity in the project
     - /ProjectSettings, /UserSettings: Predetermined Unity compiler settings
 
