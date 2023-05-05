@@ -45,7 +45,7 @@ A **Unity Application**. Installation, compilation, usage instruction, and softw
     - [Barracuda](https://github.com/Unity-Technologies/barracuda-release) neural network inference library 
 
 ## Software Overview
-1. [Flow Chart](/MDattachments/flowchart.png)
+1. [Flow Chart](/MDattachments/unityapp.pdf)
 ### Unity Components
 1. /VOCL_app
     - /Assets: Contains all Unity assets used for the project, all scripts, all scenes visible in the project.
