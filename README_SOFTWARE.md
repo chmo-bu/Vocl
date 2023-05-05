@@ -37,8 +37,12 @@ A **Unity Application**. Installation, compilation, usage instruction, and softw
     - [Fantasy Skybox](https://assetstore.unity.com/packages/2d/textures-materials/sky/fantasy-skybox-18216) version 1.6.0
 3. Xcode Version 14.2 
 4. Yamnet
-    -fill in yamnet version info.
-
+    - Adapted from https://github.com/kaiidams/YamNetUnityDemo.
+    - Utilizes pretrained Yamnet model from [Tensorflow Hub](https://tfhub.dev/google/yamnet/1)
+         - adapted from [Yamnet Demo](https://www.tensorflow.org/hub/tutorials/yamnet)
+         - Tensorflow 2.11.0, Tensorflow Lite
+         - Python 3.11.0
+    - [Barracuda](https://github.com/Unity-Technologies/barracuda-release) neural network inference library 
 
 ## Software Overview
 1. [Flow Chart](/MDattachments/flowchart.png)
